@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Search, User, Menu, Tv, Newspaper, ArrowLeftRight, Calendar, Trophy, Flame, Eye, ChevronRight, BarChart3, Shield, X, Play, Activity } from 'lucide-react';
+import { Search, User, Menu, Tv, Newspaper, ArrowLeftRight, Trophy, Flame, Eye, ChevronRight, BarChart3, Shield, X, Play, Activity } from 'lucide-react';
 
 export default function Home() {
   // State لفتح وإغلاق المقال
@@ -104,43 +104,43 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* ----------------- نافذة المقال المحدثة (MODAL مُحسّن وممركز) ----------------- */}
+        {/* ----------------- نافذة المقال المحدثة (MODAL ممركز واحترافي) ----------------- */}
         {isArticleOpen && (
-          <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+          <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
               
-              {/* زر الإغلاق الموضع بشكل أنيق */}
+              {/* زر الإغلاق */}
               <button 
                 onClick={() => setIsArticleOpen(false)}
-                className="absolute top-4 right-4 z-50 p-2 bg-black/60 hover:bg-[#d4ff00] text-white hover:text-black rounded-full border border-zinc-800 transition-all shadow-lg"
+                className="absolute top-4 right-4 z-50 p-2.5 bg-black/60 hover:bg-[#d4ff00] text-white hover:text-black rounded-full border border-zinc-800 transition-all shadow-lg"
               >
                 <X className="w-4 h-4" />
               </button>
 
-              {/* محتوى المقال القابل للتمرير داخلياً */}
+              {/* محتوى المقال */}
               <div className="overflow-y-auto p-6 md:p-10 space-y-6">
                 
                 <div className="text-center space-y-3">
                   <span className="inline-block px-4 py-1 rounded-full bg-[#d4ff00]/10 border border-[#d4ff00]/30 text-[#d4ff00] font-black uppercase tracking-widest text-[10px]">
                     FIFA World Cup 2026
                   </span>
-                  <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-tight text-white">
+                  <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-none text-white">
                     Opening <span className="text-[#d4ff00]">Ceremony</span> 2026
                   </h1>
-                  <div className="h-1 w-20 mx-auto rounded-full bg-[#d4ff00]"></div>
+                  <div className="h-1 w-24 mx-auto rounded-full bg-[#d4ff00] mt-4"></div>
                 </div>
 
-                {/* العنوان الفرعي الأنيق */}
-                <h2 className="text-red-500 text-sm md:text-base font-bold text-center max-w-xl mx-auto leading-relaxed">
+                {/* 🔴 العنوان الفرعي باللون الأحمر */}
+                <h2 className="text-red-500 text-sm md:text-base font-extrabold text-center max-w-xl mx-auto leading-relaxed">
                   The world stood still as the FIFA World Cup 2026 officially opened its doors to billions of football fans across the globe. A spectacular night filled with lights, passion, culture and unforgettable moments.
                 </h2>
 
-                {/* صورة المقال */}
-                <div className="rounded-2xl overflow-hidden border border-zinc-800 shadow-lg">
+                {/* 📸 صورة المقال ممركزة ومحددة الحجم */}
+                <div className="rounded-2xl overflow-hidden border border-zinc-800 bg-white/[0.01] p-1 shadow-lg">
                   <img 
                     src="https://i.postimg.cc/HxRYH9FH/Whats-App-Image-2026-06-13-at-01-23-11.jpg" 
                     alt="FIFA World Cup 2026 Opening Ceremony Scene" 
-                    className="w-full h-auto object-cover max-h-[300px]"
+                    className="w-full h-auto object-cover max-h-[350px] rounded-xl"
                   />
                 </div>
 
@@ -163,34 +163,63 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+
             </div>
           </div>
         )}
         {/* ----------------------------------------------------------------------- */}
 
         {/* HERO SECTION */}
-        <header className="relative min-h-[60vh] flex flex-col justify-center items-center text-center px-4 pt-12">
-          <div className="inline-flex items-center gap-2 bg-zinc-950/80 backdrop-blur-md px-4 py-2 rounded-full border border-zinc-800 text-[#d4ff00] text-xs font-black tracking-widest uppercase mb-4 shadow-xl">
+        <header className="relative min-h-[70vh] flex flex-col justify-center items-center text-center px-4 pt-16">
+          <div className="inline-flex items-center gap-2 bg-zinc-950/80 backdrop-blur-md px-4 py-2 rounded-full border border-zinc-800 text-[#d4ff00] text-xs font-black tracking-widest uppercase mb-6 shadow-xl">
             <Trophy className="w-3.5 h-3.5" /> FIFA Tournament Hub 2026
           </div>
 
-          <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase mb-6 drop-shadow-2xl bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
+          <h1 className="text-6xl md:text-9xl font-black tracking-tighter uppercase mb-8 drop-shadow-2xl bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
             World Cup 2026
           </h1>
 
-          <div className="flex flex-wrap justify-center items-center gap-6 mb-8">
+          <div className="flex flex-wrap justify-center items-center gap-8 mb-12">
             {hostCountries.map((host, i) => (
-              <div key={i} className="flex flex-col items-center gap-2 group cursor-pointer">
+              <div key={i} className="flex flex-col items-center gap-2.5 group cursor-pointer">
                 <div className="p-1 rounded-full bg-zinc-950/90 border-2 border-zinc-800 shadow-2xl group-hover:border-[#d4ff00] transition-all transform hover:scale-105">
-                  <img src={host.logo} alt={host.name} className="w-12 h-12 object-cover rounded-full" />
+                  <img src={host.logo} alt={host.name} className="w-14 h-14 object-cover rounded-full" />
                 </div>
-                <span className="text-[9px] font-black tracking-widest uppercase text-zinc-400 group-hover:text-[#d4ff00] transition-colors">{host.name}</span>
+                <span className="text-[10px] font-black tracking-widest uppercase text-zinc-400 group-hover:text-[#d4ff00] transition-colors">{host.name}</span>
               </div>
             ))}
           </div>
 
+          {/* COUNTDOWN */}
+          <div className="w-full max-w-xl bg-zinc-950/60 backdrop-blur-2xl rounded-3xl p-6 border border-zinc-800/80 mb-10 shadow-2xl">
+            <div className="text-zinc-400 text-[10px] font-black uppercase tracking-widest mb-4 flex items-center justify-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" /> Live Countdown To Kick-Off
+            </div>
+            <div className="grid grid-cols-4 gap-4 text-center divide-x divide-zinc-900">
+              {[['18', 'Days'], ['23', 'Hours'], ['06', 'Mins'], ['42', 'Secs']].map(([num, label], index) => (
+                <div key={index} className="first:pl-0 pl-2">
+                  <div className="text-3xl md:text-4xl font-black text-white tracking-tight">{num}</div>
+                  <div className="text-[9px] text-zinc-500 uppercase font-black tracking-widest mt-1">{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* BUTTONS */}
+          <div className="flex flex-wrap justify-center gap-4 w-full max-w-2xl px-4 mb-12">
+            <button className="flex-1 min-w-[150px] bg-[#d4ff00] hover:bg-[#c2eb00] text-black font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-xs transition-all">
+              <Tv className="w-4 h-4 fill-black" /> Live Analytics
+            </button>
+            <button className="flex-1 min-w-[150px] bg-zinc-950/80 hover:bg-zinc-900 border border-zinc-800/80 font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-xs transition-all text-white">
+              <Newspaper className="w-4 h-4 text-[#d4ff00]" /> Tactics Board
+            </button>
+            <button className="flex-1 min-w-[150px] bg-zinc-950/80 hover:bg-zinc-900 border border-zinc-800/80 font-black py-4 px-6 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-xs transition-all text-white">
+              <ArrowLeftRight className="w-4 h-4 text-[#d4ff00]" /> Market Hub
+            </button>
+          </div>
+
           {/* TICKER MATCHES */}
-          <div className="w-full max-w-5xl px-4 mb-4 overflow-hidden relative">
+          <div className="w-full max-w-5xl px-4 mb-8 overflow-hidden relative">
             <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 overflow-hidden flex items-center">
               <div className="flex gap-4 animate-[marquee_30s_linear_infinite] whitespace-nowrap hover:[animation-play-state:paused] cursor-pointer">
                 {[...liveTickerMatches, ...liveTickerMatches].map((match, idx) => (
@@ -217,183 +246,65 @@ export default function Home() {
         {/* MAIN CONTENT AREA */}
         <main className="max-w-7xl mx-auto px-4 md:px-8 py-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* الوسط واليمين مدموجين لتنظيم الشاشات والتكتيك */}
-          <div className="lg:col-span-8 space-y-8">
+          {/* الجانب الأيمن والأوسط: شاشات البث والتكتيك والمباريات المميزة */}
+          <div className="lg:col-span-8 space-y-12">
             
-            {/* 📺 شاشة البث والتحركات التكتيكية التفاعلية في الوسط 📺 */}
+            {/* 📺 شاشة البث والتحركات التكتيكية التفاعلية 📺 */}
             <section className="bg-zinc-950/80 backdrop-blur-md border border-zinc-900 rounded-3xl overflow-hidden shadow-2xl">
-              {/* أزرار التحكم والتبديل (Tabs Header) */}
-              <div className="flex border-b border-zinc-900 bg-zinc-900/30 p-2 gap-2">
+              {/* Tabs Control */}
+              <div className="flex border-b border-zinc-900 bg-zinc-900/20 p-2 gap-2">
                 <button 
                   onClick={() => setActiveTab('live')}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'live' ? 'bg-[#d4ff00] text-black shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'}`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'live' ? 'bg-[#d4ff00] text-black shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
                 >
                   <Tv className="w-4 h-4" /> Live Match Stream
                 </button>
                 <button 
                   onClick={() => setActiveTab('tactics')}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'tactics' ? 'bg-[#d4ff00] text-black shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-900'}`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'tactics' ? 'bg-[#d4ff00] text-black shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
                 >
-                  <Activity className="w-4 h-4" /> Tactical Player Radar
+                  <Activity className="w-4 h-4" /> Player Movements Radar
                 </button>
               </div>
 
-              {/* محتوى الشاشة المتغير حسب الاختيار */}
-              <div className="p-4 bg-black/40 min-h-[380px] flex flex-col justify-center items-center relative">
+              {/* Screen Content Container */}
+              <div className="p-6 bg-black/40 min-h-[380px] flex flex-col justify-center items-center">
                 
                 {activeTab === 'live' ? (
-                  /* واجهة البث المباشر الـ Live */
-                  <div className="w-full h-full flex flex-col items-center justify-center space-y-6 py-6 animate-fade-in">
+                  /* واجهة البث المباشر */
+                  <div className="w-full flex flex-col items-center justify-center space-y-6 py-2">
                     <div className="w-full max-w-2xl aspect-video rounded-2xl bg-zinc-900 border border-zinc-800 flex flex-col items-center justify-center relative overflow-hidden group shadow-inner">
-                      <div className="absolute inset-0 bg-gradient-to-tr from-emerald-950/20 to-black/80 z-0" />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-emerald-950/10 to-black/80 z-0" />
                       <div className="absolute top-4 left-4 bg-red-600 text-white font-black text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-md flex items-center gap-1.5 animate-pulse z-10">
-                        <span className="w-1.5 h-1.5 bg-white rounded-full" /> LIVE STREAM
+                        <span className="w-1.5 h-1.5 bg-white rounded-full" /> LIVE VIDEO FEED
                       </div>
                       <button className="w-16 h-16 rounded-full bg-[#d4ff00] text-black flex items-center justify-center pl-1 hover:scale-110 transition-transform shadow-xl relative z-10">
                         <Play className="w-6 h-6 fill-black" />
                       </button>
-                      <span className="text-zinc-500 text-xs font-bold mt-4 tracking-wider relative z-10 group-hover:text-zinc-400 transition-colors">Click to Connect to Live Tactical Feed</span>
+                      <span className="text-zinc-500 text-xs font-bold mt-4 tracking-wider relative z-10">Click to connect to live broadcasting node</span>
                     </div>
-                    {/* تفاصيل سريعة أسفل شاشة البث */}
-                    <div className="flex justify-around w-full max-w-xl text-center bg-zinc-900/50 p-3 rounded-xl border border-zinc-800/60">
+                    {/* إحصائيات سريعة للمباراة */}
+                    <div className="flex justify-around w-full max-w-xl text-center bg-zinc-900/40 p-3 rounded-xl border border-zinc-800/60">
                       <div>
                         <div className="text-zinc-400 text-[10px] font-black uppercase">Possession</div>
                         <div className="text-sm font-black text-white mt-1">54% - 46%</div>
                       </div>
                       <div className="border-l border-zinc-800" />
                       <div>
-                        <div className="text-zinc-400 text-[10px] font-black uppercase">Shots on Target</div>
-                        <div className="text-sm font-black text-[#d4ff00] mt-1">6 - 3</div>
+                        <div className="text-zinc-400 text-[10px] font-black uppercase">Shots (On Target)</div>
+                        <div className="text-sm font-black text-[#d4ff00] mt-1">12 (6) - 8 (3)</div>
                       </div>
                       <div className="border-l border-zinc-800" />
                       <div>
-                        <div className="text-zinc-400 text-[10px] font-black uppercase">Expected Goals (xG)</div>
+                        <div className="text-zinc-400 text-[10px] font-black uppercase">Team xG</div>
                         <div className="text-sm font-black text-white mt-1">1.82 - 0.95</div>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  /* واجهة تحركات اللاعبين التكتيكية الـ Radar Pitch */
-                  <div className="w-full h-full flex flex-col items-center justify-center py-4 animate-fade-in">
-                    <div className="w-full max-w-2xl aspect-[1.6] rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-950/40 to-zinc-950 relative overflow-hidden flex items-center justify-center">
-                      {/* تخطيط الملعب الافتراضي ثنائي الأبعاد */}
-                      <div className="absolute inset-y-0 left-1/2 w-px bg-white/20" />
-                      <div className="absolute w-24 h-24 rounded-full border border-white/20 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-                      <div className="absolute left-0 top-1/4 bottom-1/4 w-12 border-y border-r border-white/20" />
-                      <div className="absolute right-0 top-1/4 bottom-1/4 w-12 border-y border-l border-white/20" />
-                      
-                      {/* نقاط تمثل تحركات اللاعبين الحية (Dots Animation) */}
-                      <span className="absolute top-1/3 left-1/4 w-3 h-3 bg-[#d4ff00] rounded-full animate-ping opacity-75" />
-                      <span className="absolute top-1/3 left-1/4 w-3 h-3 bg-[#d4ff00] rounded-full shadow-[0_0_10px_#d4ff00]" />
-                      
-                      <span className="absolute top-1/2 left-1/3 w-3 h-3 bg-[#d4ff00] rounded-full shadow-[0_0_10px_#d4ff00]" />
-                      <span className="absolute bottom-1/4 left-1/2 w-3 h-3 bg-red-500 rounded-full shadow-[0_0_10px_red]" />
-                      <span className="absolute top-1/4 right-1/4 w-3 h-3 bg-red-500 rounded-full shadow-[0_0_10px_red]" />
-
-                      <div className="absolute bottom-4 left-4 text-left">
-                        <div className="text-white text-xs font-black uppercase tracking-wider">Live Radar Tracking</div>
-                        <div className="text-[10px] text-zinc-400">Tactical Node Updates Instance</div>
-                      </div>
-                    </div>
-                    <span className="text-zinc-400 text-[11px] font-medium mt-4">2D Pitch Map showing real-time positioning and defensive transition depth.</span>
-                  </div>
-                )}
-
-              </div>
-            </section>
-
-            {/* FEATURED MATCHES */}
-            <section className="space-y-4">
-              <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Featured Tactical Matches
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
-                  <div className="flex items-center justify-between gap-4 mb-4">
-                    <div className="flex items-center gap-3">
-                      <span className="text-3xl">🇲🇦</span>
-                      <div>
-                        <div className="font-black text-sm text-white">Morocco</div>
-                        <div className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Setup: 4-3-3</div>
-                      </div>
-                    </div>
-                    <div className="bg-zinc-900/80 px-3 py-1.5 rounded-xl border border-zinc-800 text-center shrink-0 min-w-[70px]">
-                      <span className="text-xl font-black text-white tracking-tighter">22:00</span>
-                      <span className="text-[8px] text-zinc-400 block font-black mt-0.5 uppercase tracking-wider">09 JUN</span>
-                    </div>
-                    <div className="flex items-center gap-3 flex-row-reverse">
-                      <span className="text-3xl">🇫🇷</span>
-                      <div className="text-right">
-                        <div className="font-black text-sm text-white">France</div>
-                        <div className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Setup: 4-2-3-1</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
-                  <div className="flex items-center justify-between gap-4 mb-4">
-                    <div className="flex items-center gap-3">
-                      <span className="text-3xl">🇦🇷</span>
-                      <div>
-                        <div className="font-black text-sm text-white">Argentina</div>
-                        <div className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Setup: 4-4-2 Lozenge</div>
-                      </div>
-                    </div>
-                    <div className="bg-zinc-900/80 px-3 py-1.5 rounded-xl border border-zinc-800 text-center shrink-0 min-w-[70px]">
-                      <span className="text-xl font-black text-white tracking-tighter">18:00</span>
-                      <span className="text-[8px] text-zinc-400 block font-black mt-0.5 uppercase tracking-wider">11 JUN</span>
-                    </div>
-                    <div className="flex items-center gap-3 flex-row-reverse">
-                      <span className="text-3xl">🇩🇪</span>
-                      <div className="text-right">
-                        <div className="font-black text-sm text-white">Germany</div>
-                        <div className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Setup: 3-4-2-1</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-
-          {/* SIDEBAR: ARTICLES & NEWS */}
-          <div className="lg:col-span-4 space-y-8">
-            <section className="space-y-4">
-              <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Trending Analytics
-              </h2>
-              <div className="space-y-4">
-                {trendingArticles.map((article, idx) => (
-                  <div 
-                    key={idx} 
-                    onClick={() => article.isCustom && setIsArticleOpen(true)}
-                    className={`bg-zinc-950/40 backdrop-blur-md border border-zinc-900/80 rounded-2xl p-3 flex gap-4 items-center group transition-all transform hover:translate-x-1 ${article.isCustom ? 'cursor-pointer hover:border-[#d4ff00]/50' : ''}`}
-                  >
-                    <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-900 shrink-0 relative border border-zinc-800">
-                      <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[8px] font-black uppercase tracking-widest bg-zinc-900 px-2 py-0.5 rounded text-zinc-400 group-hover:text-[#d4ff00]">{article.tag}</span>
-                        <span className="text-[9px] text-zinc-500 font-bold">{article.time}</span>
-                      </div>
-                      <h3 className="text-xs font-black text-zinc-200 group-hover:text-white line-clamp-2 leading-relaxed uppercase tracking-tight">{article.title}</h3>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </div>
-
-        </main>
-
-        {/* FOOTER */}
-        <footer className="border-t border-zinc-900 bg-black/80 backdrop-blur-md py-8 px-4 text-center text-zinc-500 text-[10px] font-black tracking-widest uppercase mt-20">
-          © 2026 FOOTTAKTIC LABS. ALL RIGHTS RESERVED. DATA POWERED BY AI TACTICAL ENGINES.
-        </footer>
-
-      </div>
-    </div>
-  );
-}
+                  /* واجهة تحركات اللاعبين التكتيكية */
+                  <div className="w-full flex flex-col items-center justify-center py-2">
+                    <div className="w-full max-w-2xl aspect-[1.6] rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-950/30 to-zinc-950 relative overflow-hidden flex items-center justify-center">
+                      <div className="absolute inset-y-0 left-1/2 w-px bg-white/10" />
+                      <div className="absolute w-24 h-24 rounded-full border border-white/10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+                      <div className="absolut
