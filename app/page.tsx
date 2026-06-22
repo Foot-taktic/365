@@ -1,25 +1,26 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Search, User, Menu, Tv, Newspaper, ArrowLeftRight, Trophy, Flame, X, Play, Activity } from 'lucide-react';
+import { Search, User, Menu, Tv, Trophy, Flame, X, Play, Activity } from 'lucide-react';
 
 export default function Home() {
   // State لفتح وإغلاق المقال
   const [isArticleOpen, setIsArticleOpen] = useState(false);
   // State للتبديل بين البث المباشر وتحركات اللاعبين
-  const [activeTab, setActiveTab] = useState('live'); // 'live' or 'tactics'
+  const [activeTab, setActiveTab] = useState('live');
 
   const backgroundImageStyle = {
     backgroundImage: `url('/studium.jpeg')`
   };
 
+  // نتائج واقعية ومنطقية لمباريات كأس العالم 2026 الحالية
   const liveTickerMatches = [
-    { homeLogo: "https://flagcdn.com/w40/ma.png", teamH: "MAR", awayLogo: "https://flagcdn.com/w40/fr.png", teamA: "FRA", score: "2 - 1", status: "74' Live", isLive: true },
-    { homeLogo: "https://flagcdn.com/w40/br.png", teamH: "BRA", awayLogo: "https://flagcdn.com/w40/es.png", teamA: "ESP", score: "0 - 0", status: "22:00", isLive: false },
-    { homeLogo: "https://flagcdn.com/w40/ar.png", teamH: "ARG", awayLogo: "https://flagcdn.com/w40/de.png", teamA: "GER", score: "3 - 2", status: "FT", isLive: false },
-    { homeLogo: "https://flagcdn.com/w40/gb-eng.png", teamH: "ENG", awayLogo: "https://flagcdn.com/w40/it.png", teamA: "ITA", score: "1 - 1", status: "46' Live", isLive: true },
-    { homeLogo: "https://flagcdn.com/w40/pt.png", teamH: "POR", awayLogo: "https://flagcdn.com/w40/nl.png", teamA: "NED", score: "0 - 1", status: "HT", isLive: true },
-    { homeLogo: "https://flagcdn.com/w40/us.png", teamH: "USA", awayLogo: "https://flagcdn.com/w40/mx.png", teamA: "MEX", score: "1 - 2", status: "89' Live", isLive: true }
+    { homeLogo: "https://flagcdn.com/w40/ma.png", teamH: "MAR", awayLogo: "https://flagcdn.com/w40/br.png", teamA: "BRA", score: "1 - 1", status: "88' Live", isLive: true },
+    { homeLogo: "https://flagcdn.com/w40/fr.png", teamH: "FRA", awayLogo: "https://flagcdn.com/w40/ar.png", teamA: "ARG", score: "2 - 0", status: "FT", isLive: false },
+    { homeLogo: "https://flagcdn.com/w40/us.png", teamH: "USA", awayLogo: "https://flagcdn.com/w40/de.png", teamA: "GER", score: "1 - 3", status: "FT", isLive: false },
+    { homeLogo: "https://flagcdn.com/w40/es.png", teamH: "ESP", awayLogo: "https://flagcdn.com/w40/pt.png", teamA: "POR", score: "2 - 2", status: "45' HT", isLive: true },
+    { homeLogo: "https://flagcdn.com/w40/gb-eng.png", teamH: "ENG", awayLogo: "https://flagcdn.com/w40/nl.png", teamA: "NED", score: "1 - 0", status: "65' Live", isLive: true },
+    { homeLogo: "https://flagcdn.com/w40/it.png", teamH: "ITA", awayLogo: "https://flagcdn.com/w40/be.png", teamA: "BEL", score: "0 - 1", status: "FT", isLive: false }
   ];
 
   const hostCountries = [
@@ -65,6 +66,23 @@ export default function Home() {
       style={backgroundImageStyle}
     >
       
+      {/* حقن ستايل الـ Marquee مباشرة لضمان تحرك النتائج بدون تعديل ملف Config خارجي */}
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee-custom {
+          display: flex;
+          gap: 16px;
+          white-space: nowrap;
+          animation: marquee 35s linear infinite;
+        }
+        .animate-marquee-custom:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+      
       {/* BACKGROUND EFFECTS */}
       <div className="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#d4ff00]/10 blur-[150px] pointer-events-none -z-10 animate-pulse duration-[6000m]" />
       <div className="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#d4ff00]/5 blur-[120px] pointer-events-none -z-10" />
@@ -104,7 +122,7 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* ----------------- نافذة المقال (MODAL ممركز واحترافي) ----------------- */}
+        {/* ----------------- نافذة المقال (MODAL) ----------------- */}
         {isArticleOpen && (
           <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
@@ -178,27 +196,36 @@ export default function Home() {
             ))}
           </div>
 
-          {/* TICKER MATCHES */}
+          {/* 📺 شريط نتائج المباريات المتحرك (LIVE TICKER MARQUEE) 📺 */}
           <div className="w-full max-w-5xl px-4 mb-8 overflow-hidden relative">
             <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 overflow-hidden flex items-center">
-              <div className="flex gap-4 animate-[marquee_30s_linear_infinite] whitespace-nowrap hover:[animation-play-state:paused] cursor-pointer">
+              
+              <div className="animate-marquee-custom cursor-pointer">
+                {/* نكرر القائمة مرتين لضمان استمرارية الحركة بدون فراغات */}
                 {[...liveTickerMatches, ...liveTickerMatches].map((match, idx) => (
-                  <div key={idx} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[240px] justify-between group">
+                  <div key={idx} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
                     <div className="flex items-center gap-2">
-                      <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded" />
-                      <span className="font-black text-xs text-zinc-200 group-hover:text-white">{match.teamH}</span>
+                      <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded shadow-sm" />
+                      <span className="font-black text-xs text-zinc-200">{match.teamH}</span>
                     </div>
-                    <div className="bg-zinc-950/90 px-3 py-1 rounded-lg border border-zinc-800 text-center min-w-[65px]">
-                      <span className={`text-xs font-black block tracking-tighter ${match.isLive ? 'text-[#d4ff00]' : 'text-zinc-300'}`}>{match.score}</span>
-                      <span className={`text-[8px] font-black block uppercase tracking-widest ${match.isLive ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>{match.status}</span>
+                    
+                    <div className="bg-zinc-950 px-3 py-1 rounded-lg border border-zinc-800 text-center min-w-[70px]">
+                      <span className={`text-xs font-black block tracking-tighter ${match.isLive ? 'text-[#d4ff00]' : 'text-zinc-300'}`}>
+                        {match.score}
+                      </span>
+                      <span className={`text-[8px] font-black block uppercase tracking-widest ${match.isLive ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>
+                        {match.status}
+                      </span>
                     </div>
+                    
                     <div className="flex items-center gap-2">
-                      <span className="font-black text-xs text-zinc-200 group-hover:text-white">{match.teamA}</span>
-                      <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded" />
+                      <span className="font-black text-xs text-zinc-200">{match.teamA}</span>
+                      <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded shadow-sm" />
                     </div>
                   </div>
                 ))}
               </div>
+
             </div>
           </div>
         </header>
@@ -206,7 +233,7 @@ export default function Home() {
         {/* MAIN CONTENT AREA */}
         <main className="max-w-7xl mx-auto px-4 md:px-8 py-4 space-y-12">
           
-          {/* 📺 شاشة البث والتحركات التكتيكية 📺 */}
+          {/* شاشة البث والتحركات التكتيكية */}
           <section className="bg-zinc-950/80 backdrop-blur-md border border-zinc-900 rounded-3xl overflow-hidden shadow-2xl">
             <div className="flex border-b border-zinc-900 bg-zinc-900/20 p-2 gap-2">
               <button 
@@ -297,14 +324,13 @@ export default function Home() {
             </div>
           </section>
 
-          {/* 🌟 قسم المقالات المطور: سطر واحد ثابت وممتاز فـ التيليفون والبيسي 🌟 */}
+          {/* 🌟 قسم المقالات: سطر واحد (Grid فالبيسي و يدوز بالصبع فالتيليفون) 🌟 */}
           <section className="space-y-6 pt-6">
             <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2 px-2">
               <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Trending Tactical Analytics
             </h2>
             
-            {/* جعلت الحاوية تدعم التمرير الأفقي بسلاسة فـ التيليفون، وترجع Grid عادي فـ الشاشات الكبيرة */}
-            <div className="flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 scrollbar-none snap-x snap-mandatory w-full">
+            <div className="flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory w-full">
               {trendingArticles.map((article, idx) => (
                 <div 
                   key={idx} 
@@ -313,7 +339,6 @@ export default function Home() {
                     w-[78vw] sm:w-[45vw] lg:w-full shrink-0 snap-center ${article.isCustom ? 'cursor-pointer' : ''}`}
                 >
                   <div>
-                    {/* الصورة مربعة متناسقة على كل الشاشات */}
                     <div className="w-full aspect-square rounded-xl overflow-hidden bg-zinc-900 relative border border-zinc-900 mb-4">
                       <img 
                         src={article.image} 
@@ -322,7 +347,6 @@ export default function Home() {
                         draggable="false"
                       />
                     </div>
-                    {/* النصوص والعنوان */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-[8px] font-black uppercase tracking-widest bg-zinc-900/80 border border-zinc-800 px-2 py-0.5 rounded text-zinc-400 group-hover:text-[#d4ff00]">
