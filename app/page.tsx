@@ -109,7 +109,6 @@ export default function Home() {
           <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
               
-              {/* زر الإغلاق */}
               <button 
                 onClick={() => setIsArticleOpen(false)}
                 className="absolute top-4 right-4 z-50 p-2.5 bg-black/60 hover:bg-[#d4ff00] text-white hover:text-black rounded-full border border-zinc-800 transition-all shadow-lg"
@@ -117,9 +116,7 @@ export default function Home() {
                 <X className="w-4 h-4" />
               </button>
 
-              {/* محتوى المقال */}
               <div className="overflow-y-auto p-6 md:p-10 space-y-6">
-                
                 <div className="text-center space-y-3">
                   <span className="inline-block px-4 py-1 rounded-full bg-[#d4ff00]/10 border border-[#d4ff00]/30 text-[#d4ff00] font-black uppercase tracking-widest text-[10px]">
                     FIFA World Cup 2026
@@ -130,12 +127,10 @@ export default function Home() {
                   <div className="h-1 w-24 mx-auto rounded-full bg-[#d4ff00] mt-4"></div>
                 </div>
 
-                {/* العنوان الفرعي باللون الأحمر */}
                 <h2 className="text-red-500 text-sm md:text-base font-extrabold text-center max-w-xl mx-auto leading-relaxed">
                   The world stood still as the FIFA World Cup 2026 officially opened its doors to billions of football fans across the globe. A spectacular night filled with lights, passion, culture and unforgettable moments.
                 </h2>
 
-                {/* صورة المقال */}
                 <div className="rounded-2xl overflow-hidden border border-zinc-800 bg-white/[0.01] p-1 shadow-lg">
                   <img 
                     src="https://i.postimg.cc/HxRYH9FH/Whats-App-Image-2026-06-13-at-01-23-11.jpg" 
@@ -144,7 +139,6 @@ export default function Home() {
                   />
                 </div>
 
-                {/* نصوص المقال */}
                 <div className="space-y-4 text-zinc-300 text-sm md:text-base leading-relaxed text-justify">
                   <p>
                     The FIFA World Cup 2026 officially began with one of the most impressive opening
@@ -162,7 +156,6 @@ export default function Home() {
             </div>
           </div>
         )}
-        {/* ----------------------------------------------------------------------- */}
 
         {/* HERO SECTION */}
         <header className="relative min-h-[65vh] flex flex-col justify-center items-center text-center px-4 pt-16">
@@ -304,22 +297,23 @@ export default function Home() {
             </div>
           </section>
 
-          {/* 🌟 قسم المقالات: ثابت على شكل Grid (سطر عريض فيه 4 مربعات متناسقة) 🌟 */}
+          {/* 🌟 قسم المقالات المطور: سطر واحد ثابت وممتاز فـ التيليفون والبيسي 🌟 */}
           <section className="space-y-6 pt-6">
             <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2 px-2">
               <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Trending Tactical Analytics
             </h2>
             
-            {/* Grid layout (1 col on mobile, 2 cols on tablet, 4 cols on desktop) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+            {/* جعلت الحاوية تدعم التمرير الأفقي بسلاسة فـ التيليفون، وترجع Grid عادي فـ الشاشات الكبيرة */}
+            <div className="flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 scrollbar-none snap-x snap-mandatory w-full">
               {trendingArticles.map((article, idx) => (
                 <div 
                   key={idx} 
                   onClick={() => article.isCustom && setIsArticleOpen(true)}
-                  className={`bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between group transition-all duration-300 hover:border-[#d4ff00]/50 hover:shadow-[0_4px_20px_rgba(212,255,0,0.05)] ${article.isCustom ? 'cursor-pointer' : ''}`}
+                  className={`bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between group transition-all duration-300 hover:border-[#d4ff00]/50 hover:shadow-[0_4px_20px_rgba(212,255,0,0.05)]
+                    w-[78vw] sm:w-[45vw] lg:w-full shrink-0 snap-center ${article.isCustom ? 'cursor-pointer' : ''}`}
                 >
                   <div>
-                    {/* الصورة مربعة الشكل ومحددة هيدروليكياً */}
+                    {/* الصورة مربعة متناسقة على كل الشاشات */}
                     <div className="w-full aspect-square rounded-xl overflow-hidden bg-zinc-900 relative border border-zinc-900 mb-4">
                       <img 
                         src={article.image} 
@@ -328,7 +322,7 @@ export default function Home() {
                         draggable="false"
                       />
                     </div>
-                    {/* النصوص والعنوان داخل المربع */}
+                    {/* النصوص والعنوان */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-[8px] font-black uppercase tracking-widest bg-zinc-900/80 border border-zinc-800 px-2 py-0.5 rounded text-zinc-400 group-hover:text-[#d4ff00]">
