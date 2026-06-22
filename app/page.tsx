@@ -104,7 +104,7 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* ----------------- نافذة المقال المحدثة (MODAL ممركز واحترافي) ----------------- */}
+        {/* ----------------- نافذة المقال (MODAL ممركز واحترافي) ----------------- */}
         {isArticleOpen && (
           <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
@@ -213,7 +213,7 @@ export default function Home() {
         {/* MAIN CONTENT AREA */}
         <main className="max-w-7xl mx-auto px-4 md:px-8 py-4 space-y-12">
           
-          {/* 📺 شاشة البث والتحركات التكتيكية التفاعلية 📺 */}
+          {/* 📺 شاشة البث والتحركات التكتيكية 📺 */}
           <section className="bg-zinc-950/80 backdrop-blur-md border border-zinc-900 rounded-3xl overflow-hidden shadow-2xl">
             <div className="flex border-b border-zinc-900 bg-zinc-900/20 p-2 gap-2">
               <button 
@@ -304,19 +304,56 @@ export default function Home() {
             </div>
           </section>
 
-          {/* 🌟 قسم المقالات: تحت بالكامل، 4 ف السطر، مع أنيماسيون حركي 🌟 */}
-          <section className="space-y-6 pt-6 relative overflow-hidden">
+          {/* 🌟 قسم المقالات: ثابت على شكل Grid (سطر عريض فيه 4 مربعات متناسقة) 🌟 */}
+          <section className="space-y-6 pt-6">
             <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2 px-2">
               <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Trending Tactical Analytics
             </h2>
             
-            {/* Carousel Container */}
-            <div className="w-full overflow-hidden relative py-2 masked-edges">
-              <div className="flex gap-6 animate-[marquee_25s_linear_infinite] whitespace-nowrap hover:[animation-play-state:paused]">
-                {/* دمج المصفوفة مرتين لضمان استمرار الأنيماسيون بسلاسة وبدون انقطاع */}
-                {[...trendingArticles, ...trendingArticles].map((article, idx) => (
-                  <div 
-                    key={idx} 
-                    onClick={() => article.isCustom && setIsArticleOpen(true)}
-                    className={`inline-block w-[280px] md:w-[300px] bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-4 group transition-all hover:border-[#d4ff00]/50 shrink-0 select-none ${article.isCustom ? 'cursor-pointer' : ''}`}
-                  >
+            {/* Grid layout (1 col on mobile, 2 cols on tablet, 4 cols on desktop) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+              {trendingArticles.map((article, idx) => (
+                <div 
+                  key={idx} 
+                  onClick={() => article.isCustom && setIsArticleOpen(true)}
+                  className={`bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between group transition-all duration-300 hover:border-[#d4ff00]/50 hover:shadow-[0_4px_20px_rgba(212,255,0,0.05)] ${article.isCustom ? 'cursor-pointer' : ''}`}
+                >
+                  <div>
+                    {/* الصورة مربعة الشكل ومحددة هيدروليكياً */}
+                    <div className="w-full aspect-square rounded-xl overflow-hidden bg-zinc-900 relative border border-zinc-900 mb-4">
+                      <img 
+                        src={article.image} 
+                        alt={article.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        draggable="false"
+                      />
+                    </div>
+                    {/* النصوص والعنوان داخل المربع */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[8px] font-black uppercase tracking-widest bg-zinc-900/80 border border-zinc-800 px-2 py-0.5 rounded text-zinc-400 group-hover:text-[#d4ff00]">
+                          {article.tag}
+                        </span>
+                        <span className="text-[9px] text-zinc-500 font-bold">{article.time}</span>
+                      </div>
+                      <h3 className="text-xs md:text-sm font-black text-zinc-200 group-hover:text-white leading-relaxed uppercase tracking-tight line-clamp-3">
+                        {article.title}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+        </main>
+
+        {/* FOOTER */}
+        <footer className="border-t border-zinc-900 bg-black/80 backdrop-blur-md py-8 px-4 text-center text-zinc-500 text-[10px] font-black tracking-widest uppercase mt-20">
+          © 2026 FOOTTAKTIC LABS. ALL RIGHTS RESERVED. DATA POWERED BY AI TACTICAL ENGINES.
+        </footer>
+
+      </div>
+    </div>
+  );
+}
