@@ -4,10 +4,8 @@ import React, { useState } from 'react';
 import { Search, User, Menu, Tv, Trophy, Flame, X, Play, Activity } from 'lucide-react';
 
 export default function Home() {
-  // State لإدارة فتح وإغلاق المقال الحالي
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // State لتخزين المقال المفتوح حالياً
-  const [activeArticle, setActiveArticle] = useState(null);
+  // State لفتح وإغلاق المقال
+  const [isArticleOpen, setIsArticleOpen] = useState(false);
   // State للتبديل بين البث المباشر وتحركات اللاعبين
   const [activeTab, setActiveTab] = useState('live');
 
@@ -31,40 +29,22 @@ export default function Home() {
     { name: "Mexico", logo: "https://flagcdn.com/w80/mx.png" }
   ];
 
-  // دمج المقال الجديد في القائمة وتحديد المحتوى بدقة لكل واحد
   const trendingArticles = [
     {
-      id: "ceremony",
       title: "FIFA World Cup 2026 Opening Ceremony",
       tag: "Ceremony",
       image: "https://i.postimg.cc/HxRYH9FH/Whats-App-Image-2026-06-13-at-01-23-11.jpg",
       time: "Yesterday",
-      isCustom: true,
-      subTitle: "The world stood still as the FIFA World Cup 2026 officially opened its doors to billions of football fans across the globe. A spectacular night filled with lights, passion, culture and unforgettable moments.",
-      content: [
-        "The FIFA World Cup 2026 officially began with one of the most impressive opening ceremonies ever witnessed in international football. Fans from every continent gathered to celebrate the beginning of a new chapter in the history of the sport.",
-        "The atmosphere around the stadium was electric. Thousands of supporters filled the streets wearing their national colors while music, lights and celebrations transformed the host city into the center of the football universe."
-      ]
+      isCustom: true
     },
     {
-      id: "morocco-haiti",
-      title: "Morocco 4-2 Haiti: Atlas Lions Complete a Thrilling Comeback to Reach the FIFA World Cup Round of 32",
-      tag: "Match Report",
-      image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80", // صورة كروية حماسية تناسب الماتش
-      time: "Just Now",
-      isCustom: true,
-      subTitle: "In one of the most entertaining matches of the FIFA World Cup 2026 group stage, Morocco secured a dramatic 4-2 victory over Haiti in their final Group C fixture, earning a place in the Round of 32. The Atlas Lions finished second in the group behind Brazil on goal difference after collecting seven points from three matches.",
-      content: [
-        "Morocco entered the game knowing that a victory would guarantee qualification, but the match began in the worst possible way. Just ten minutes into the first half, an unfortunate own goal by goalkeeper Yassine Bounou handed Haiti an unexpected 1-0 lead. The early setback stunned the Moroccan players, who immediately pushed forward in search of an equalizer.",
-        "As the first half progressed, Morocco gradually took control of possession and began creating dangerous opportunities. The attacking trio of Ismael Saibari, Bilal El Khannouss, and Brahim Diaz constantly threatened the Haitian defense, while captain Achraf Hakimi was highly influential down the right flank.",
-        "Morocco's pressure finally paid off in the 39th minute, when Hakimi finished a well-worked attacking move to level the score at 1-1. However, Haiti responded almost immediately in the 43rd minute through Wilson Isidor with a spectacular long-range effort to restore Haiti's lead at 2-1.",
-        "Deep into stoppage time, Ismael Saibari found space inside the penalty area and calmly finished to make it 2-2 before halftime. Saibari became the first African player to score in every group-stage match for his country in a single FIFA World Cup.",
-        "The breakthrough finally arrived in the 78th minute. Substitute Soufiane Rahimi made an immediate impact by finishing a swift attacking move to give Morocco their first lead at 3-2. In the 89th minute, young forward Jassim Yassine sealed the victory by scoring Morocco's fourth goal after capitalizing on a defensive mistake.",
-        "With this impressive 4-2 victory, Morocco finished the group stage with seven points, equal to Brazil but behind on goal difference. More importantly, the Atlas Lions secured their place in the FIFA World Cup 2026 Round of 32, where they will continue their journey with growing confidence."
-      ]
+      title: "Morocco's Low-Block Mastery: Structural Analysis of the Wall",
+      tag: "Scouting",
+      image: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=400&q=80",
+      time: "1h ago",
+      isCustom: false
     },
     {
-      id: "scouting",
       title: "Data Analytics: Predicting the Underdog Surprises of 2026",
       tag: "Stats",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80",
@@ -72,7 +52,6 @@ export default function Home() {
       isCustom: false
     },
     {
-      id: "fitness",
       title: "High-Intensity Transitions: The Physical Demands of Modern Football",
       tag: "Fitness",
       image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80",
@@ -81,21 +60,13 @@ export default function Home() {
     }
   ];
 
-  // دالة لفتح المودال وتحديد المقال المختار
-  const handleOpenArticle = (article) => {
-    if (article.isCustom) {
-      setActiveArticle(article);
-      setIsModalOpen(true);
-    }
-  };
-
   return (
     <div 
       className="min-h-screen text-zinc-100 font-sans antialiased relative bg-cover bg-center bg-no-repeat bg-fixed selection:bg-[#d4ff00] selection:text-black overflow-x-hidden"
       style={backgroundImageStyle}
     >
       
-      {/* حقن ستايل الـ Marquee مباشرة لضمان تحرك النتائج بشكل رائع وسلس */}
+      {/* حقن ستايل الـ Marquee مباشرة لضمان تحرك النتائج بدون تعديل ملف Config خارجي */}
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0%); }
@@ -151,13 +122,13 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* ----------------- نافذة المقال الديناميكية (MODAL الذكي) ----------------- */}
-        {isModalOpen && activeArticle && (
+        {/* ----------------- نافذة المقال (MODAL) ----------------- */}
+        {isArticleOpen && (
           <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
               
               <button 
-                onClick={() => { setIsModalOpen(false); setActiveArticle(null); }}
+                onClick={() => setIsArticleOpen(false)}
                 className="absolute top-4 right-4 z-50 p-2.5 bg-black/60 hover:bg-[#d4ff00] text-white hover:text-black rounded-full border border-zinc-800 transition-all shadow-lg"
               >
                 <X className="w-4 h-4" />
@@ -168,28 +139,35 @@ export default function Home() {
                   <span className="inline-block px-4 py-1 rounded-full bg-[#d4ff00]/10 border border-[#d4ff00]/30 text-[#d4ff00] font-black uppercase tracking-widest text-[10px]">
                     FIFA World Cup 2026
                   </span>
-                  <h1 className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-snug text-white text-center">
-                    {activeArticle.title}
+                  <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-none text-white">
+                    Opening <span className="text-[#d4ff00]">Ceremony</span> 2026
                   </h1>
                   <div className="h-1 w-24 mx-auto rounded-full bg-[#d4ff00] mt-4"></div>
                 </div>
 
-                <h2 className="text-[#d4ff00] text-xs md:text-sm font-bold text-center max-w-2xl mx-auto leading-relaxed border-l-2 border-[#d4ff00] pl-4 italic bg-[#d4ff00]/5 py-2 rounded-r-xl">
-                  {activeArticle.subTitle}
+                <h2 className="text-red-500 text-sm md:text-base font-extrabold text-center max-w-xl mx-auto leading-relaxed">
+                  The world stood still as the FIFA World Cup 2026 officially opened its doors to billions of football fans across the globe. A spectacular night filled with lights, passion, culture and unforgettable moments.
                 </h2>
 
                 <div className="rounded-2xl overflow-hidden border border-zinc-800 bg-white/[0.01] p-1 shadow-lg">
                   <img 
-                    src={activeArticle.image} 
-                    alt={activeArticle.title} 
+                    src="https://i.postimg.cc/HxRYH9FH/Whats-App-Image-2026-06-13-at-01-23-11.jpg" 
+                    alt="FIFA World Cup 2026 Opening Ceremony Scene" 
                     className="w-full h-auto object-cover max-h-[350px] rounded-xl"
                   />
                 </div>
 
-                <div className="space-y-4 text-zinc-300 text-xs md:text-sm leading-relaxed text-justify">
-                  {activeArticle.content.map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
+                <div className="space-y-4 text-zinc-300 text-sm md:text-base leading-relaxed text-justify">
+                  <p>
+                    The FIFA World Cup 2026 officially began with one of the most impressive opening
+                    ceremonies ever witnessed in international football. Fans from every continent
+                    gathered to celebrate the beginning of a new chapter in the history of the sport.
+                  </p>
+                  <p>
+                    The atmosphere around the stadium was electric. Thousands of supporters filled
+                    the streets wearing their national colors while music, lights and celebrations
+                    transformed the host city into the center of the football universe.
+                  </p>
                 </div>
               </div>
 
@@ -218,11 +196,12 @@ export default function Home() {
             ))}
           </div>
 
-          {/* شريط النتائج الجاري الحركة تلقائياً */}
+          {/* 📺 شريط نتائج المباريات المتحرك (LIVE TICKER MARQUEE) 📺 */}
           <div className="w-full max-w-5xl px-4 mb-8 overflow-hidden relative">
             <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 overflow-hidden flex items-center">
               
               <div className="animate-marquee-custom cursor-pointer">
+                {/* نكرر القائمة مرتين لضمان استمرارية الحركة بدون فراغات */}
                 {[...liveTickerMatches, ...liveTickerMatches].map((match, idx) => (
                   <div key={idx} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
                     <div className="flex items-center gap-2">
@@ -234,7 +213,9 @@ export default function Home() {
                       <span className={`text-xs font-black block tracking-tighter ${match.isLive ? 'text-[#d4ff00]' : 'text-zinc-300'}`}>
                         {match.score}
                       </span>
-                      <span className={`text-[8px] font-black block uppercase tracking-widest ${match.isLive ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>{match.status}</span>
+                      <span className={`text-[8px] font-black block uppercase tracking-widest ${match.isLive ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>
+                        {match.status}
+                      </span>
                     </div>
                     
                     <div className="flex items-center gap-2">
@@ -308,3 +289,89 @@ export default function Home() {
                     <div className="font-black text-sm text-white">Morocco</div>
                     <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-3-3</div>
                   </div>
+                </div>
+                <div className="bg-zinc-900/80 px-4 py-1.5 rounded-xl border border-zinc-800 text-center">
+                  <span className="text-sm font-black text-white">22:00</span>
+                </div>
+                <div className="flex items-center gap-3 flex-row-reverse">
+                  <span className="text-3xl">🇫🇷</span>
+                  <div className="text-right">
+                    <div className="font-black text-sm text-white">France</div>
+                    <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-2-3-1</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-5 shadow-xl flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">🇦🇷</span>
+                  <div>
+                    <div className="font-black text-sm text-white">Argentina</div>
+                    <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-4-2</div>
+                  </div>
+                </div>
+                <div className="bg-zinc-900/80 px-4 py-1.5 rounded-xl border border-zinc-800 text-center">
+                  <span className="text-sm font-black text-white">18:00</span>
+                </div>
+                <div className="flex items-center gap-3 flex-row-reverse">
+                  <span className="text-3xl">🇩🇪</span>
+                  <div className="text-right">
+                    <div className="font-black text-sm text-white">Germany</div>
+                    <div className="text-[9px] text-zinc-500 font-bold">Setup: 3-4-2-1</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 🌟 قسم المقالات: سطر واحد (Grid فالبيسي و يدوز بالصبع فالتيليفون) 🌟 */}
+          <section className="space-y-6 pt-6">
+            <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2 px-2">
+              <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Trending Tactical Analytics
+            </h2>
+            
+            <div className="flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory w-full">
+              {trendingArticles.map((article, idx) => (
+                <div 
+                  key={idx} 
+                  onClick={() => article.isCustom && setIsArticleOpen(true)}
+                  className={`bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-4 flex flex-col justify-between group transition-all duration-300 hover:border-[#d4ff00]/50 hover:shadow-[0_4px_20px_rgba(212,255,0,0.05)]
+                    w-[78vw] sm:w-[45vw] lg:w-full shrink-0 snap-center ${article.isCustom ? 'cursor-pointer' : ''}`}
+                >
+                  <div>
+                    <div className="w-full aspect-square rounded-xl overflow-hidden bg-zinc-900 relative border border-zinc-900 mb-4">
+                      <img 
+                        src={article.image} 
+                        alt={article.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        draggable="false"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[8px] font-black uppercase tracking-widest bg-zinc-900/80 border border-zinc-800 px-2 py-0.5 rounded text-zinc-400 group-hover:text-[#d4ff00]">
+                          {article.tag}
+                        </span>
+                        <span className="text-[9px] text-zinc-500 font-bold">{article.time}</span>
+                      </div>
+                      <h3 className="text-xs md:text-sm font-black text-zinc-200 group-hover:text-white leading-relaxed uppercase tracking-tight line-clamp-3">
+                        {article.title}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+        </main>
+
+        {/* FOOTER */}
+        <footer className="border-t border-zinc-900 bg-black/80 backdrop-blur-md py-8 px-4 text-center text-zinc-500 text-[10px] font-black tracking-widest uppercase mt-20">
+          © 2026 FOOTTAKTIC LABS. ALL RIGHTS RESERVED. DATA POWERED BY AI TACTICAL ENGINES.
+        </footer>
+
+      </div>
+    </div>
+  );
+}
