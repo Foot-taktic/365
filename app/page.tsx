@@ -4,18 +4,14 @@ import React, { useState } from 'react';
 import { Search, User, Menu, Tv, Trophy, Flame, X, Play, Activity, ArrowUpRight } from 'lucide-react';
 
 export default function Home() {
-  // State لإدارة فتح وإغلاق المقال الحالي
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // State لتخزين المقال المفتوح حالياً
   const [activeArticle, setActiveArticle] = useState(null);
-  // State للتبديل بين البث المباشر وتحركات اللاعبين
   const [activeTab, setActiveTab] = useState('live');
 
   const backgroundImageStyle = {
     backgroundImage: `url('/studium.jpeg')`
   };
 
-  // نتائج واقعية ومنطقية لمباريات كأس العالم 2026 الحالية
   const liveTickerMatches = [
     { homeLogo: "https://flagcdn.com/w40/ma.png", teamH: "MAR", awayLogo: "https://flagcdn.com/w40/br.png", teamA: "BRA", score: "1 - 1", status: "88' Live", isLive: true },
     { homeLogo: "https://flagcdn.com/w40/fr.png", teamH: "FRA", awayLogo: "https://flagcdn.com/w40/ar.png", teamA: "ARG", score: "2 - 0", status: "FT", isLive: false },
@@ -31,7 +27,6 @@ export default function Home() {
     { name: "Mexico", logo: "https://flagcdn.com/w80/mx.png" }
   ];
 
-  // تم تمديد القائمة إلى 8 مقالات لتظهر في سطرين (4 في كل سطر)
   const trendingArticles = [
     {
       id: "ceremony",
@@ -40,10 +35,10 @@ export default function Home() {
       image: "https://i.postimg.cc/HxRYH9FH/Whats-App-Image-2026-06-13-at-01-23-11.jpg",
       time: "Yesterday",
       isCustom: true,
-      subTitle: "The world stood still as the FIFA World Cup 2026 officially opened its doors to billions of football fans across the globe. A spectacular night filled with lights, passion, culture and unforgettable moments.",
+      subTitle: "The world stood still as the FIFA World Cup 2026 officially opened its doors to billions of football fans across the globe.",
       content: [
-        "The FIFA World Cup 2026 officially began with one of the most impressive opening ceremonies ever witnessed in international football. Fans from every continent gathered to celebrate the beginning of a new chapter in the history of the sport.",
-        "The atmosphere around the stadium was electric. Thousands of supporters filled the streets wearing their national colors while music, lights and celebrations transformed the host city into the center of the football universe."
+        "The FIFA World Cup 2026 officially began with one of the most impressive opening ceremonies ever witnessed in international football.",
+        "The atmosphere around the stadium was electric. Thousands of supporters filled the streets wearing their national colors."
       ]
     },
     {
@@ -53,11 +48,10 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80", 
       time: "Just Now",
       isCustom: true,
-      subTitle: "In one of the most entertaining matches of the FIFA World Cup 2026 group stage, Morocco secured a dramatic 4-2 victory over Haiti in their final Group C fixture, earning a place in the Round of 32.",
+      subTitle: "In one of the most entertaining matches of the FIFA World Cup 2026 group stage, Morocco secured a dramatic 4-2 victory over Haiti.",
       content: [
-        "Morocco entered the game knowing that a victory would guarantee qualification, but the match began in the worst possible way. Just ten minutes into the first half, an unfortunate own goal by goalkeeper Yassine Bounou handed Haiti an unexpected 1-0 lead.",
-        "Morocco's pressure finally paid off in the 39th minute, when Hakimi finished a well-worked attacking move to level the score at 1-1. Deep into stoppage time, Ismael Saibari found space inside the penalty area and calmly finished to make it 2-2 before halftime.",
-        "Substitute Soufiane Rahimi made an immediate impact by finishing a swift attacking move to give Morocco their first lead at 3-2. In the 89th minute, young forward Jassim Yassine sealed the victory by scoring Morocco's fourth goal."
+        "Morocco entered the game knowing that a victory would guarantee qualification, but the match began in the worst possible way.",
+        "Morocco's pressure finally paid off in the 39th minute, when Hakimi finished a well-worked attacking move to level the score at 1-1."
       ]
     },
     {
@@ -76,7 +70,6 @@ export default function Home() {
       time: "5h ago",
       isCustom: false
     },
-    // المقالات الأربعة الجديدة المضافة لتكملة السطر الثاني:
     {
       id: "tactical-trends",
       title: "The Death of the Classic No. 9? How False Profiles Dominate 2026",
@@ -124,22 +117,6 @@ export default function Home() {
       style={backgroundImageStyle}
     >
       
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee-custom {
-          display: flex;
-          gap: 16px;
-          white-space: nowrap;
-          animation: marquee 35s linear infinite;
-        }
-        .animate-marquee-custom:hover {
-          animation-play-state: paused;
-        }
-      `}} />
-      
       {/* BACKGROUND EFFECTS */}
       <div className="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#d4ff00]/10 blur-[150px] pointer-events-none -z-10 animate-pulse" />
       <div className="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#d4ff00]/5 blur-[120px] pointer-events-none -z-10" />
@@ -179,7 +156,7 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* MODAL الذكي */}
+        {/* MODAL */}
         {isModalOpen && activeArticle && (
           <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
@@ -246,12 +223,12 @@ export default function Home() {
             ))}
           </div>
 
-          {/* شريط النتائج الجاري الحركة تلقائياً */}
+          {/* MARQUEE TICKER (معدل بـ Tailwind الخالص لتجنب مشاكل الـ Build) */}
           <div className="w-full max-w-5xl px-4 mb-8 overflow-hidden relative">
-            <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 overflow-hidden flex items-center">
+            <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 flex items-center overflow-x-auto no-scrollbar">
               
-              <div className="animate-marquee-custom cursor-pointer">
-                {[...liveTickerMatches, ...liveTickerMatches].map((match, idx) => (
+              <div className="flex gap-4 whitespace-nowrap min-w-full">
+                {liveTickerMatches.map((match, idx) => (
                   <div key={idx} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
                     <div className="flex items-center gap-2">
                       <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded shadow-sm" />
@@ -280,7 +257,7 @@ export default function Home() {
         {/* MAIN CONTENT AREA */}
         <main className="max-w-7xl mx-auto px-4 md:px-8 py-4 space-y-12">
           
-          {/* شاشة البث والتحركات التكتيكية */}
+          {/* STREAM SECTION */}
           <section className="bg-zinc-950/80 backdrop-blur-md border border-zinc-900 rounded-3xl overflow-hidden shadow-2xl">
             <div className="flex border-b border-zinc-900 bg-zinc-900/20 p-2 gap-2">
               <button 
@@ -323,7 +300,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* قسم المقالات - شبكة من سطرين (8 مقالات إجمالاً) */}
+          {/* ARTICLES GRID SECTION */}
           <section className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
@@ -334,7 +311,6 @@ export default function Home() {
               </span>
             </div>
 
-            {/* تم ضبط الـ Grid ليحتوي على 4 أعمدة في الشاشات الكبيرة ليصبح لدينا سطرين متناسقين بشكل ممتاز */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {trendingArticles.map((article) => (
                 <div 
@@ -372,7 +348,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* FEATURED MATCHES */}
+          {/* FEATURED MATCHES SECTION */}
           <section className="space-y-4">
             <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Featured Tactical Matches
@@ -380,7 +356,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-5 shadow-xl flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <span className="text-3xl">🇲🇦</span>
+                  <span className="text-xs font-bold text-white">MAR</span>
                   <div>
                     <div className="font-black text-sm text-white">Morocco</div>
                     <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-3-3</div>
@@ -388,7 +364,7 @@ export default function Home() {
                 </div>
                 <div className="text-zinc-500 font-black text-xs uppercase tracking-widest">vs</div>
                 <div className="flex items-center gap-3 flex-row-reverse">
-                  <span className="text-3xl">🇧🇷</span>
+                  <span className="text-xs font-bold text-white">BRA</span>
                   <div className="text-right">
                     <div className="font-black text-sm text-white">Brazil</div>
                     <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-2-3-1</div>
