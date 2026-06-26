@@ -31,7 +31,7 @@ export default function Home() {
     { name: "Mexico", logo: "https://flagcdn.com/w80/mx.png" }
   ];
 
-  // دمج المقالين المخصصين (حفل الافتتاح + ماتش المغرب) في قائمة المقالات
+  // دمج المقال الجديد في القائمة وتحديد المحتوى بدقة لكل واحد
   const trendingArticles = [
     {
       id: "ceremony",
@@ -50,7 +50,7 @@ export default function Home() {
       id: "morocco-haiti",
       title: "Morocco 4-2 Haiti: Atlas Lions Complete a Thrilling Comeback to Reach the FIFA World Cup Round of 32",
       tag: "Match Report",
-      image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80",
+      image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80", 
       time: "Just Now",
       isCustom: true,
       subTitle: "In one of the most entertaining matches of the FIFA World Cup 2026 group stage, Morocco secured a dramatic 4-2 victory over Haiti in their final Group C fixture, earning a place in the Round of 32. The Atlas Lions finished second in the group behind Brazil on goal difference after collecting seven points from three matches.",
@@ -95,7 +95,7 @@ export default function Home() {
       style={backgroundImageStyle}
     >
       
-      {/* حل مشكلة ستايل الـ Marquee في Next.js لضمان عمل الحركة بدون أخطاء */}
+      {/* حقن ستايل الـ Marquee مباشرة لضمان تحرك النتائج بشكل رائع وسلس وبدون أخطاء JSX */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee {
           0% { transform: translateX(0%); }
@@ -151,7 +151,7 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* ----------------- نافذة المقال التفاعلية (MODAL) ----------------- */}
+        {/* ----------------- نافذة المقال الديناميكية (MODAL الذكي) ----------------- */}
         {isModalOpen && activeArticle && (
           <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
@@ -218,7 +218,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* شريط النتائج المتحرك تلقائياً وبسلاسة */}
+          {/* شريط النتائج الجاري الحركة تلقائياً */}
           <div className="w-full max-w-5xl px-4 mb-8 overflow-hidden relative">
             <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 overflow-hidden flex items-center">
               
