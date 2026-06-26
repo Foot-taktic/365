@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Search, User, Menu, Tv, Trophy, Flame, X, Play, Activity } from 'lucide-react';
+import { Search, User, Menu, Tv, Trophy, Flame, X, Play, Activity, ArrowUpRight } from 'lucide-react';
 
 export default function Home() {
   // State لإدارة فتح وإغلاق المقال الحالي
@@ -31,7 +31,7 @@ export default function Home() {
     { name: "Mexico", logo: "https://flagcdn.com/w80/mx.png" }
   ];
 
-  // دمج المقال الجديد في القائمة وتحديد المحتوى بدقة لكل واحد
+  // تم تمديد القائمة إلى 8 مقالات لتظهر في سطرين (4 في كل سطر)
   const trendingArticles = [
     {
       id: "ceremony",
@@ -53,14 +53,11 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80", 
       time: "Just Now",
       isCustom: true,
-      subTitle: "In one of the most entertaining matches of the FIFA World Cup 2026 group stage, Morocco secured a dramatic 4-2 victory over Haiti in their final Group C fixture, earning a place in the Round of 32. The Atlas Lions finished second in the group behind Brazil on goal difference after collecting seven points from three matches.",
+      subTitle: "In one of the most entertaining matches of the FIFA World Cup 2026 group stage, Morocco secured a dramatic 4-2 victory over Haiti in their final Group C fixture, earning a place in the Round of 32.",
       content: [
-        "Morocco entered the game knowing that a victory would guarantee qualification, but the match began in the worst possible way. Just ten minutes into the first half, an unfortunate own goal by goalkeeper Yassine Bounou handed Haiti an unexpected 1-0 lead. The early setback stunned the Moroccan players, who immediately pushed forward in search of an equalizer.",
-        "As the first half progressed, Morocco gradually took control of possession and began creating dangerous opportunities. The attacking trio of Ismael Saibari, Bilal El Khannouss, and Brahim Diaz constantly threatened the Haitian defense, while captain Achraf Hakimi was highly influential down the right flank.",
-        "Morocco's pressure finally paid off in the 39th minute, when Hakimi finished a well-worked attacking move to level the score at 1-1. However, Haiti responded almost immediately in the 43rd minute through Wilson Isidor with a spectacular long-range effort to restore Haiti's lead at 2-1.",
-        "Deep into stoppage time, Ismael Saibari found space inside the penalty area and calmly finished to make it 2-2 before halftime. Saibari became the first African player to score in every group-stage match for his country in a single FIFA World Cup.",
-        "The breakthrough finally arrived in the 78th minute. Substitute Soufiane Rahimi made an immediate impact by finishing a swift attacking move to give Morocco their first lead at 3-2. In the 89th minute, young forward Jassim Yassine sealed the victory by scoring Morocco's fourth goal after capitalizing on a defensive mistake.",
-        "With this impressive 4-2 victory, Morocco finished the group stage with seven points, equal to Brazil but behind on goal difference. More importantly, the Atlas Lions secured their place in the FIFA World Cup 2026 Round of 32, where they will continue their journey with growing confidence."
+        "Morocco entered the game knowing that a victory would guarantee qualification, but the match began in the worst possible way. Just ten minutes into the first half, an unfortunate own goal by goalkeeper Yassine Bounou handed Haiti an unexpected 1-0 lead.",
+        "Morocco's pressure finally paid off in the 39th minute, when Hakimi finished a well-worked attacking move to level the score at 1-1. Deep into stoppage time, Ismael Saibari found space inside the penalty area and calmly finished to make it 2-2 before halftime.",
+        "Substitute Soufiane Rahimi made an immediate impact by finishing a swift attacking move to give Morocco their first lead at 3-2. In the 89th minute, young forward Jassim Yassine sealed the victory by scoring Morocco's fourth goal."
       ]
     },
     {
@@ -78,10 +75,42 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80",
       time: "5h ago",
       isCustom: false
+    },
+    // المقالات الأربعة الجديدة المضافة لتكملة السطر الثاني:
+    {
+      id: "tactical-trends",
+      title: "The Death of the Classic No. 9? How False Profiles Dominate 2026",
+      tag: "Tactics",
+      image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=400&q=80",
+      time: "6h ago",
+      isCustom: false
+    },
+    {
+      id: "goalkeeper-role",
+      title: "Sweeper Keepers: Analyzing Progressive Passing from the Back",
+      tag: "Analysis",
+      image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=400&q=80",
+      time: "8h ago",
+      isCustom: false
+    },
+    {
+      id: "pressing-triggers",
+      title: "Mid-Block Pressing: Defensive Masterclasses in the Group Stage",
+      tag: "Defending",
+      image: "https://images.unsplash.com/photo-1431324155629-1a6edd1d1315?auto=format&fit=crop&w=400&q=80",
+      time: "12h ago",
+      isCustom: false
+    },
+    {
+      id: "youth-scout",
+      title: "Golden Generation: Top 5 Under-21 Talents Shifting the Tournament",
+      tag: "Scouting",
+      image: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=400&q=80",
+      time: "1d ago",
+      isCustom: false
     }
   ];
 
-  // دالة لفتح المودال وتحديد المقال المختار
   const handleOpenArticle = (article) => {
     if (article.isCustom) {
       setActiveArticle(article);
@@ -95,7 +124,6 @@ export default function Home() {
       style={backgroundImageStyle}
     >
       
-      {/* حقن ستايل الـ Marquee مباشرة لضمان تحرك النتائج بشكل رائع وسلس وبدون أخطاء JSX */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee {
           0% { transform: translateX(0%); }
@@ -113,7 +141,7 @@ export default function Home() {
       `}} />
       
       {/* BACKGROUND EFFECTS */}
-      <div className="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#d4ff00]/10 blur-[150px] pointer-events-none -z-10 animate-pulse duration-[6000m]" />
+      <div className="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#d4ff00]/10 blur-[150px] pointer-events-none -z-10 animate-pulse" />
       <div className="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#d4ff00]/5 blur-[120px] pointer-events-none -z-10" />
       <div className="fixed inset-0 bg-black/45 pointer-events-none -z-10" />
       <div className="fixed inset-0 bg-gradient-to-b from-zinc-950/70 via-transparent to-zinc-950 pointer-events-none -z-10" />
@@ -151,7 +179,7 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* ----------------- نافذة المقال الديناميكية (MODAL الذكي) ----------------- */}
+        {/* MODAL الذكي */}
         {isModalOpen && activeArticle && (
           <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
@@ -295,6 +323,55 @@ export default function Home() {
             </div>
           </section>
 
+          {/* قسم المقالات - شبكة من سطرين (8 مقالات إجمالاً) */}
+          <section className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Tactical Labs & Insights
+              </h2>
+              <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider bg-zinc-900/50 px-3 py-1 rounded-full border border-zinc-800">
+                8 Articles Available
+              </span>
+            </div>
+
+            {/* تم ضبط الـ Grid ليحتوي على 4 أعمدة في الشاشات الكبيرة ليصبح لدينا سطرين متناسقين بشكل ممتاز */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {trendingArticles.map((article) => (
+                <div 
+                  key={article.id}
+                  onClick={() => handleOpenArticle(article)}
+                  className={`bg-zinc-950/50 backdrop-blur-md border border-zinc-900 rounded-2xl overflow-hidden shadow-xl flex flex-col group transition-all duration-300 ${article.isCustom ? 'cursor-pointer hover:border-[#d4ff00]/40 hover:-translate-y-1' : 'opacity-80'}`}
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
+                    <img 
+                      src={article.image} 
+                      alt={article.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    />
+                    <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg border border-zinc-800 text-[9px] font-black uppercase tracking-wider text-[#d4ff00]">
+                      {article.tag}
+                    </div>
+                  </div>
+
+                  <div className="p-4 flex-1 flex flex-col justify-between space-y-4">
+                    <div className="space-y-2">
+                      <div className="text-[10px] text-zinc-500 font-bold">{article.time}</div>
+                      <h3 className="font-black text-xs md:text-sm text-zinc-200 line-clamp-2 leading-snug group-hover:text-white transition-colors">
+                        {article.title}
+                      </h3>
+                    </div>
+
+                    {article.isCustom && (
+                      <div className="flex items-center gap-1 text-[10px] text-[#d4ff00] font-black uppercase tracking-widest pt-2 border-t border-zinc-900/60">
+                        Read Analysis <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* FEATURED MATCHES */}
           <section className="space-y-4">
             <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
@@ -307,3 +384,28 @@ export default function Home() {
                   <div>
                     <div className="font-black text-sm text-white">Morocco</div>
                     <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-3-3</div>
+                  </div>
+                </div>
+                <div className="text-zinc-500 font-black text-xs uppercase tracking-widest">vs</div>
+                <div className="flex items-center gap-3 flex-row-reverse">
+                  <span className="text-3xl">🇧🇷</span>
+                  <div className="text-right">
+                    <div className="font-black text-sm text-white">Brazil</div>
+                    <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-2-3-1</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </main>
+
+        {/* FOOTER */}
+        <footer className="border-t border-zinc-900 bg-zinc-950/80 backdrop-blur-md mt-20 py-8 text-center text-zinc-600 text-[10px] font-bold uppercase tracking-widest">
+          © 2026 FOOTTAKTIC Lab. All tactical rights reserved.
+        </footer>
+
+      </div>
+    </div>
+  );
+}
