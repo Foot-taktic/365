@@ -101,10 +101,41 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=400&q=80",
       time: "1d ago",
       isCustom: false
+    },
+    {
+      id: "set-pieces",
+      title: "The Evolution of Set-Pieces: Unlocking Low Blocks in 2026",
+      tag: "Tactics",
+      image: "https://images.unsplash.com/photo-1504155611049-24a2e50f866b?auto=format&fit=crop&w=400&q=80",
+      time: "1d ago",
+      isCustom: false
+    },
+    {
+      id: "var-impact",
+      title: "Automated Offsides & VAR: How Referees Are Adapting on the Big Stage",
+      tag: "Technology",
+      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80",
+      time: "2d ago",
+      isCustom: false
+    },
+    {
+      id: "captain-influence",
+      title: "Leadership in High Pressure: Mentality Kings of the Group Stage",
+      tag: "Psychology",
+      image: "https://images.unsplash.com/photo-1516567174044-1dfc2787e42d?auto=format&fit=crop&w=400&q=80",
+      time: "2d ago",
+      isCustom: false
+    },
+    {
+      id: "stadium-tech",
+      title: "Climate-Controlled Pitches: Ensuring Peak Performance in Extreme Weather",
+      tag: "Infrastructure",
+      image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=400&q=80",
+      time: "3d ago",
+      isCustom: false
     }
   ];
 
-  // تعديل هنا بإضافة (article: any) لحل خطأ الـ Build فالسيرفر
   const handleOpenArticle = (article: any) => {
     if (article.isCustom) {
       setActiveArticle(article);
@@ -301,7 +332,7 @@ export default function Home() {
                 <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Tactical Labs & Insights
               </h2>
               <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider bg-zinc-900/50 px-3 py-1 rounded-full border border-zinc-800">
-                8 Articles Available
+                12 Articles Available
               </span>
             </div>
 
@@ -336,3 +367,13 @@ export default function Home() {
                         Read Analysis <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </div>
                     )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  );
+}
