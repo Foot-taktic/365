@@ -5,7 +5,7 @@ import { Search, User, Menu, Tv, Trophy, Flame, X, Play, Activity, ArrowUpRight 
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeArticle, setActiveArticle] = useState(null);
+  const [activeArticle, setActiveArticle] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('live');
 
   const backgroundImageStyle = {
@@ -104,7 +104,8 @@ export default function Home() {
     }
   ];
 
-  const handleOpenArticle = (article) => {
+  // تعديل هنا بإضافة (article: any) لحل خطأ الـ Build فالسيرفر
+  const handleOpenArticle = (article: any) => {
     if (article.isCustom) {
       setActiveArticle(article);
       setIsModalOpen(true);
@@ -116,7 +117,6 @@ export default function Home() {
       className="min-h-screen text-zinc-100 font-sans antialiased relative bg-cover bg-center bg-no-repeat bg-fixed selection:bg-[#d4ff00] selection:text-black overflow-x-hidden"
       style={backgroundImageStyle}
     >
-      
       {/* BACKGROUND EFFECTS */}
       <div className="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#d4ff00]/10 blur-[150px] pointer-events-none -z-10 animate-pulse" />
       <div className="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#d4ff00]/5 blur-[120px] pointer-events-none -z-10" />
@@ -124,7 +124,6 @@ export default function Home() {
       <div className="fixed inset-0 bg-gradient-to-b from-zinc-950/70 via-transparent to-zinc-950 pointer-events-none -z-10" />
 
       <div className="relative z-10">
-
         {/* TOP TICKER */}
         <div className="bg-[#d4ff00] text-black text-center py-2 text-[10px] md:text-xs font-black tracking-widest uppercase shadow-md flex items-center justify-center gap-2">
           <Flame className="w-4 h-4 fill-black animate-bounce" /> Road to World Cup 2026 • Exclusive Tactical Insights <Flame className="w-4 h-4 fill-black animate-bounce" />
@@ -160,7 +159,6 @@ export default function Home() {
         {isModalOpen && activeArticle && (
           <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-3xl rounded-3xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl max-h-[85vh] flex flex-col">
-              
               <button 
                 onClick={() => { setIsModalOpen(false); setActiveArticle(null); }}
                 className="absolute top-4 right-4 z-50 p-2.5 bg-black/60 hover:bg-[#d4ff00] text-white hover:text-black rounded-full border border-zinc-800 transition-all shadow-lg"
@@ -192,12 +190,11 @@ export default function Home() {
                 </div>
 
                 <div className="space-y-4 text-zinc-300 text-xs md:text-sm leading-relaxed text-justify">
-                  {activeArticle.content.map((paragraph, index) => (
+                  {activeArticle.content.map((paragraph: string, index: number) => (
                     <p key={index}>{paragraph}</p>
                   ))}
                 </div>
               </div>
-
             </div>
           </div>
         )}
@@ -223,10 +220,9 @@ export default function Home() {
             ))}
           </div>
 
-          {/* MARQUEE TICKER (معدل بـ Tailwind الخالص لتجنب مشاكل الـ Build) */}
+          {/* MARQUEE TICKER */}
           <div className="w-full max-w-5xl px-4 mb-8 overflow-hidden relative">
             <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 flex items-center overflow-x-auto no-scrollbar">
-              
               <div className="flex gap-4 whitespace-nowrap min-w-full">
                 {liveTickerMatches.map((match, idx) => (
                   <div key={idx} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
@@ -249,14 +245,12 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
         </header>
 
         {/* MAIN CONTENT AREA */}
         <main className="max-w-7xl mx-auto px-4 md:px-8 py-4 space-y-12">
-          
           {/* STREAM SECTION */}
           <section className="bg-zinc-950/80 backdrop-blur-md border border-zinc-900 rounded-3xl overflow-hidden shadow-2xl">
             <div className="flex border-b border-zinc-900 bg-zinc-900/20 p-2 gap-2">
@@ -342,46 +336,3 @@ export default function Home() {
                         Read Analysis <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </div>
                     )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* FEATURED MATCHES SECTION */}
-          <section className="space-y-4">
-            <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Featured Tactical Matches
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-5 shadow-xl flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-white">MAR</span>
-                  <div>
-                    <div className="font-black text-sm text-white">Morocco</div>
-                    <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-3-3</div>
-                  </div>
-                </div>
-                <div className="text-zinc-500 font-black text-xs uppercase tracking-widest">vs</div>
-                <div className="flex items-center gap-3 flex-row-reverse">
-                  <span className="text-xs font-bold text-white">BRA</span>
-                  <div className="text-right">
-                    <div className="font-black text-sm text-white">Brazil</div>
-                    <div className="text-[9px] text-zinc-500 font-bold">Setup: 4-2-3-1</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-        </main>
-
-        {/* FOOTER */}
-        <footer className="border-t border-zinc-900 bg-zinc-950/80 backdrop-blur-md mt-20 py-8 text-center text-zinc-600 text-[10px] font-bold uppercase tracking-widest">
-          © 2026 FOOTTAKTIC Lab. All tactical rights reserved.
-        </footer>
-
-      </div>
-    </div>
-  );
-}
