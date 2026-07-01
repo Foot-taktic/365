@@ -12,13 +12,16 @@ export default function Home() {
     backgroundImage: `url('/studium.jpeg')`
   };
 
+  // المجموعات الجديدة لنتائج المباريات مع تحديد المتأهلين بنظام خروج المغلوب
   const liveTickerMatches = [
-    { homeLogo: "https://flagcdn.com/w40/ma.png", teamH: "MAR", awayLogo: "https://flagcdn.com/w40/br.png", teamA: "BRA", score: "1 - 1", status: "88' Live", isLive: true },
-    { homeLogo: "https://flagcdn.com/w40/fr.png", teamH: "FRA", awayLogo: "https://flagcdn.com/w40/ar.png", teamA: "ARG", score: "2 - 0", status: "FT", isLive: false },
-    { homeLogo: "https://flagcdn.com/w40/us.png", teamH: "USA", awayLogo: "https://flagcdn.com/w40/de.png", teamA: "GER", score: "1 - 3", status: "FT", isLive: false },
-    { homeLogo: "https://flagcdn.com/w40/es.png", teamH: "ESP", awayLogo: "https://flagcdn.com/w40/pt.png", teamA: "POR", score: "2 - 2", status: "45' HT", isLive: true },
-    { homeLogo: "https://flagcdn.com/w40/gb-eng.png", teamH: "ENG", awayLogo: "https://flagcdn.com/w40/nl.png", teamA: "NED", score: "1 - 0", status: "65' Live", isLive: true },
-    { homeLogo: "https://flagcdn.com/w40/it.png", teamH: "ITA", awayLogo: "https://flagcdn.com/w40/be.png", teamA: "BEL", score: "0 - 1", status: "FT", isLive: false }
+    { homeLogo: "https://flagcdn.com/w40/ca.png", teamH: "CAN", awayLogo: "https://flagcdn.com/w40/za.png", teamA: "RSA", score: "1 - 0", status: "FT", qualified: "كندا 🇨🇦" },
+    { homeLogo: "https://flagcdn.com/w40/br.png", teamH: "BRA", awayLogo: "https://flagcdn.com/w40/jp.png", teamA: "JPN", score: "2 - 1", status: "FT", qualified: "البرازيل 🇧🇷" },
+    { homeLogo: "https://flagcdn.com/w40/de.png", teamH: "GER", awayLogo: "https://flagcdn.com/w40/py.png", teamA: "PAR", score: "1 - 1", status: "PEN (3-4)", qualified: "باراغواي 🇵🇾", extraInfo: "🎯 ركلات الترجيح" },
+    { homeLogo: "https://flagcdn.com/w40/nl.png", teamH: "NED", awayLogo: "https://flagcdn.com/w40/ma.png", teamA: "MAR", score: "1 - 1", status: "PEN (2-3)", qualified: "المغرب 🇲🇦", extraInfo: "🎯 ركلات الترجيح" },
+    { homeLogo: "https://flagcdn.com/w40/ci.png", teamH: "CIV", awayLogo: "https://flagcdn.com/w40/no.png", teamA: "NOR", score: "1 - 2", status: "FT", qualified: "النرويج 🇳🇴" },
+    { homeLogo: "https://flagcdn.com/w40/fr.png", teamH: "FRA", awayLogo: "https://flagcdn.com/w40/se.png", teamA: "SWE", score: "3 - 0", status: "FT", qualified: "فرنسا 🇫🇷" },
+    { homeLogo: "https://flagcdn.com/w40/mx.png", teamH: "MEX", awayLogo: "https://flagcdn.com/w40/ec.png", teamA: "ECU", score: "2 - 0", status: "FT", qualified: "المكسيك 🇲🇽" },
+    { homeLogo: "https://flagcdn.com/w40/gb-eng.png", teamH: "ENG", awayLogo: "https://flagcdn.com/w40/cd.png", teamA: "COD", score: "2 - 1", status: "FT", qualified: "إنجلترا 🏴󠁧󠁢󠁥󠁮󠁧󠁿" }
   ];
 
   const hostCountries = [
@@ -156,12 +159,15 @@ export default function Home() {
         }
         .animate-marquee-custom {
           display: flex;
-          gap: 1rem;
+          gap: 1.5rem;
           white-space: nowrap;
-          animation: customMarquee 25s linear infinite;
+          animation: customMarquee 35s linear infinite;
         }
         .animate-marquee-custom:hover {
           animation-play-state: paused;
+        }
+        .animate-pulse-slow {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
       `}</style>
 
@@ -263,43 +269,72 @@ export default function Home() {
             ))}
           </div>
 
-          {/* MARQUEE TICKER */}
-          <div className="w-full max-w-5xl px-4 mb-8 overflow-hidden relative">
-            <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 flex items-center overflow-hidden">
+          {/* MARQUEE TICKER WITH NEW RESULTS & ANIMATIONS */}
+          <div className="w-full max-w-6xl px-4 mb-8 overflow-hidden relative">
+            <div className="relative bg-zinc-950/70 backdrop-blur-md border border-zinc-900 rounded-2xl p-4 flex items-center overflow-hidden">
               <div className="animate-marquee-custom">
+                {/* Loop 1 */}
                 {liveTickerMatches.map((match, idx) => (
-                  <div key={`set1-${idx}`} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
-                    <div className="flex items-center gap-2">
-                      <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded shadow-sm" />
-                      <span className="font-black text-xs text-zinc-200">{match.teamH}</span>
+                  <div key={`set1-${idx}`} className="inline-flex flex-col gap-2 bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-3 min-w-[310px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2">
+                        <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded shadow-sm" />
+                        <span className="font-black text-xs text-zinc-200">{match.teamH}</span>
+                      </div>
+                      <div className="bg-zinc-950/80 px-2.5 py-1 rounded-lg border border-zinc-800 text-center min-w-[75px]">
+                        <span className="text-xs font-black block tracking-tighter text-[#d4ff00]">
+                          {match.score}
+                        </span>
+                        <span className="text-[8px] font-black block uppercase tracking-widest text-zinc-400">{match.status}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-black text-xs text-zinc-200">{match.teamA}</span>
+                        <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded shadow-sm" />
+                      </div>
                     </div>
-                    <div className="bg-zinc-950 px-3 py-1 rounded-lg border border-zinc-800 text-center min-w-[70px]">
-                      <span className={`text-xs font-black block tracking-tighter ${match.isLive ? 'text-[#d4ff00]' : 'text-zinc-300'}`}>
-                        {match.score}
+                    {/* Qualified Team Display & Extras */}
+                    <div className="flex items-center justify-between border-t border-zinc-800/60 pt-1.5 text-[10px] dir-rtl text-right">
+                      <span className="text-[#d4ff00] font-bold flex items-center gap-1">
+                        <span className="animate-ping inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 ml-1"></span>
+                        ✅ المتأهل: {match.qualified}
                       </span>
-                      <span className={`text-[8px] font-black block uppercase tracking-widest ${match.isLive ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>{match.status}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-black text-xs text-zinc-200">{match.teamA}</span>
-                      <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded shadow-sm" />
+                      {match.extraInfo && (
+                        <span className="text-zinc-400 text-[9px] font-medium bg-zinc-950 px-2 py-0.5 rounded border border-zinc-900 animate-pulse-slow">
+                          {match.extraInfo}
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
+                {/* Loop 2 (For smooth infinite scroll effect) */}
                 {liveTickerMatches.map((match, idx) => (
-                  <div key={`set2-${idx}`} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
-                    <div className="flex items-center gap-2">
-                      <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded shadow-sm" />
-                      <span className="font-black text-xs text-zinc-200">{match.teamH}</span>
+                  <div key={`set2-${idx}`} className="inline-flex flex-col gap-2 bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-3 min-w-[310px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2">
+                        <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded shadow-sm" />
+                        <span className="font-black text-xs text-zinc-200">{match.teamH}</span>
+                      </div>
+                      <div className="bg-zinc-950/80 px-2.5 py-1 rounded-lg border border-zinc-800 text-center min-w-[75px]">
+                        <span className="text-xs font-black block tracking-tighter text-[#d4ff00]">
+                          {match.score}
+                        </span>
+                        <span className="text-[8px] font-black block uppercase tracking-widest text-zinc-400">{match.status}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-black text-xs text-zinc-200">{match.teamA}</span>
+                        <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded shadow-sm" />
+                      </div>
                     </div>
-                    <div className="bg-zinc-950 px-3 py-1 rounded-lg border border-zinc-800 text-center min-w-[70px]">
-                      <span className={`text-xs font-black block tracking-tighter ${match.isLive ? 'text-[#d4ff00]' : 'text-zinc-300'}`}>
-                        {match.score}
+                    <div className="flex items-center justify-between border-t border-zinc-800/60 pt-1.5 text-[10px] dir-rtl text-right">
+                      <span className="text-[#d4ff00] font-bold flex items-center gap-1">
+                        <span className="animate-ping inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 ml-1"></span>
+                        ✅ المتأهل: {match.qualified}
                       </span>
-                      <span className={`text-[8px] font-black block uppercase tracking-widest ${match.isLive ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>{match.status}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-black text-xs text-zinc-200">{match.teamA}</span>
-                      <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded shadow-sm" />
+                      {match.extraInfo && (
+                        <span className="text-zinc-400 text-[9px] font-medium bg-zinc-950 px-2 py-0.5 rounded border border-zinc-900 animate-pulse-slow">
+                          {match.extraInfo}
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
