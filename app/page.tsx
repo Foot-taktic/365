@@ -148,16 +148,32 @@ export default function Home() {
       className="min-h-screen text-zinc-100 font-sans antialiased relative bg-cover bg-center bg-no-repeat bg-fixed selection:bg-[#d4ff00] selection:text-black overflow-x-hidden"
       style={backgroundImageStyle}
     >
+      {/* ANIMATION INJECTION */}
+      <style jsx global>{`
+        @keyframes customMarquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee-custom {
+          display: flex;
+          gap: 1rem;
+          white-space: nowrap;
+          animation: customMarquee 25s linear infinite;
+        }
+        .animate-marquee-custom:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
       {/* BACKGROUND EFFECTS */}
       <div className="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#d4ff00]/10 blur-[150px] pointer-events-none -z-10 animate-pulse" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#d4ff00]/5 blur-[120px] pointer-events-none -z-10" />
       <div className="fixed inset-0 bg-black/45 pointer-events-none -z-10" />
       <div className="fixed inset-0 bg-gradient-to-b from-zinc-950/70 via-transparent to-zinc-950 pointer-events-none -z-10" />
 
       <div className="relative z-10">
         {/* TOP TICKER */}
         <div className="bg-[#d4ff00] text-black text-center py-2 text-[10px] md:text-xs font-black tracking-widest uppercase shadow-md flex items-center justify-center gap-2">
-          <Flame className="w-4 h-4 fill-black animate-bounce" /> Road to World Cup 2026 • Exclusive Tactical Insights <Flame className="w-4 h-4 fill-black animate-bounce" />
+          <Flame className="w-4 h-4 fill-black animate-bounce" /> Foot-Taktic • Exclusive Tactical Insights <Flame className="w-4 h-4 fill-black animate-bounce" />
         </div>
 
         {/* NAVBAR */}
@@ -166,6 +182,7 @@ export default function Home() {
             <button className="text-zinc-400 hover:text-white p-2 hover:bg-zinc-900/80 rounded-xl">
               <Menu className="w-5 h-5" />
             </button>
+            {/* BRAND NAME */}
             <div className="text-2xl font-black tracking-tighter flex items-center gap-1 group cursor-pointer">
               <span className="text-white group-hover:text-[#d4ff00]">FOOT</span> 
               <span className="text-[#d4ff00] border-l-2 border-[#d4ff00] pl-2 bg-[#d4ff00]/10 px-2.5 py-0.5 rounded-lg tracking-tight">TAKTIC</span>
@@ -176,7 +193,6 @@ export default function Home() {
             <a href="#" className="text-[#d4ff00] border-b-2 border-[#d4ff00] pb-1 tracking-widest">Home</a>
             <a href="#" className="hover:text-white transition-all">Matches</a>
             <a href="#" className="hover:text-white transition-all">Tactical Labs</a>
-            <a href="#" className="hover:text-white transition-all">Transfers</a>
             <a href="#" className="hover:text-white transition-all">News</a>
           </div>
 
@@ -200,7 +216,7 @@ export default function Home() {
               <div className="overflow-y-auto p-6 md:p-10 space-y-6">
                 <div className="text-center space-y-3">
                   <span className="inline-block px-4 py-1 rounded-full bg-[#d4ff00]/10 border border-[#d4ff00]/30 text-[#d4ff00] font-black uppercase tracking-widest text-[10px]">
-                    FIFA World Cup 2026
+                    Foot-Taktic Lab
                   </span>
                   <h1 className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-snug text-white text-center">
                     {activeArticle.title}
@@ -213,11 +229,7 @@ export default function Home() {
                 </h2>
 
                 <div className="rounded-2xl overflow-hidden border border-zinc-800 bg-white/[0.01] p-1 shadow-lg">
-                  <img 
-                    src={activeArticle.image} 
-                    alt={activeArticle.title} 
-                    className="w-full h-auto object-cover max-h-[350px] rounded-xl"
-                  />
+                  <img src={activeArticle.image} alt={activeArticle.title} className="w-full h-auto object-cover max-h-[350px] rounded-xl" />
                 </div>
 
                 <div className="space-y-4 text-zinc-300 text-xs md:text-sm leading-relaxed text-justify">
@@ -237,7 +249,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-6xl md:text-9xl font-black tracking-tighter uppercase mb-8 drop-shadow-2xl bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
-            World Cup 2026
+            Foot-Taktic
           </h1>
 
           <div className="flex flex-wrap justify-center items-center gap-8 mb-12">
@@ -253,22 +265,38 @@ export default function Home() {
 
           {/* MARQUEE TICKER */}
           <div className="w-full max-w-5xl px-4 mb-8 overflow-hidden relative">
-            <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 flex items-center overflow-x-auto no-scrollbar">
-              <div className="flex gap-4 whitespace-nowrap min-w-full">
+            <div className="relative bg-zinc-950/60 backdrop-blur-md border border-zinc-900 rounded-2xl p-3.5 flex items-center overflow-hidden">
+              <div className="animate-marquee-custom">
                 {liveTickerMatches.map((match, idx) => (
-                  <div key={idx} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
+                  <div key={`set1-${idx}`} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
                     <div className="flex items-center gap-2">
                       <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded shadow-sm" />
                       <span className="font-black text-xs text-zinc-200">{match.teamH}</span>
                     </div>
-                    
                     <div className="bg-zinc-950 px-3 py-1 rounded-lg border border-zinc-800 text-center min-w-[70px]">
                       <span className={`text-xs font-black block tracking-tighter ${match.isLive ? 'text-[#d4ff00]' : 'text-zinc-300'}`}>
                         {match.score}
                       </span>
                       <span className={`text-[8px] font-black block uppercase tracking-widest ${match.isLive ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>{match.status}</span>
                     </div>
-                    
+                    <div className="flex items-center gap-2">
+                      <span className="font-black text-xs text-zinc-200">{match.teamA}</span>
+                      <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded shadow-sm" />
+                    </div>
+                  </div>
+                ))}
+                {liveTickerMatches.map((match, idx) => (
+                  <div key={`set2-${idx}`} className="inline-flex items-center gap-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-2.5 min-w-[250px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
+                    <div className="flex items-center gap-2">
+                      <img src={match.homeLogo} alt={match.teamH} className="w-5 h-5 object-contain rounded shadow-sm" />
+                      <span className="font-black text-xs text-zinc-200">{match.teamH}</span>
+                    </div>
+                    <div className="bg-zinc-950 px-3 py-1 rounded-lg border border-zinc-800 text-center min-w-[70px]">
+                      <span className={`text-xs font-black block tracking-tighter ${match.isLive ? 'text-[#d4ff00]' : 'text-zinc-300'}`}>
+                        {match.score}
+                      </span>
+                      <span className={`text-[8px] font-black block uppercase tracking-widest ${match.isLive ? 'text-red-500 animate-pulse' : 'text-zinc-500'}`}>{match.status}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       <span className="font-black text-xs text-zinc-200">{match.teamA}</span>
                       <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded shadow-sm" />
@@ -285,16 +313,10 @@ export default function Home() {
           {/* STREAM SECTION */}
           <section className="bg-zinc-950/80 backdrop-blur-md border border-zinc-900 rounded-3xl overflow-hidden shadow-2xl">
             <div className="flex border-b border-zinc-900 bg-zinc-900/20 p-2 gap-2">
-              <button 
-                onClick={() => setActiveTab('live')}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'live' ? 'bg-[#d4ff00] text-black shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
-              >
+              <button onClick={() => setActiveTab('live')} className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'live' ? 'bg-[#d4ff00] text-black shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}>
                 <Tv className="w-4 h-4" /> Live Match Stream
               </button>
-              <button 
-                onClick={() => setActiveTab('tactics')}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'tactics' ? 'bg-[#d4ff00] text-black shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}
-              >
+              <button onClick={() => setActiveTab('tactics')} className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'tactics' ? 'bg-[#d4ff00] text-black shadow-lg' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50'}`}>
                 <Activity className="w-4 h-4" /> Player Movements Radar
               </button>
             </div>
@@ -304,9 +326,6 @@ export default function Home() {
                 <div className="w-full flex flex-col items-center justify-center space-y-6 py-2">
                   <div className="w-full max-w-3xl aspect-video rounded-2xl bg-zinc-900 border border-zinc-800 flex flex-col items-center justify-center relative overflow-hidden group shadow-inner">
                     <div className="absolute inset-0 bg-gradient-to-tr from-emerald-950/10 to-black/80 z-0" />
-                    <div className="absolute top-4 left-4 bg-red-600 text-white font-black text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-md flex items-center gap-1.5 animate-pulse z-10">
-                      <span className="w-1.5 h-1.5 bg-white rounded-full" /> LIVE VIDEO FEED
-                    </div>
                     <button className="w-16 h-16 rounded-full bg-[#d4ff00] text-black flex items-center justify-center pl-1 hover:scale-110 transition-transform shadow-xl relative z-10">
                       <Play className="w-6 h-6 fill-black" />
                     </button>
@@ -329,7 +348,7 @@ export default function Home() {
           <section className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-xs font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Tactical Labs & Insights
+                <span className="w-2 h-2 rounded-full bg-[#d4ff00]" /> Foot-Taktic Labs & Insights
               </h2>
               <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider bg-zinc-900/50 px-3 py-1 rounded-full border border-zinc-800">
                 12 Articles Available
@@ -344,11 +363,7 @@ export default function Home() {
                   className={`bg-zinc-950/50 backdrop-blur-md border border-zinc-900 rounded-2xl overflow-hidden shadow-xl flex flex-col group transition-all duration-300 ${article.isCustom ? 'cursor-pointer hover:border-[#d4ff00]/40 hover:-translate-y-1' : 'opacity-80'}`}
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
-                    <img 
-                      src={article.image} 
-                      alt={article.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                    />
+                    <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg border border-zinc-800 text-[9px] font-black uppercase tracking-wider text-[#d4ff00]">
                       {article.tag}
                     </div>
