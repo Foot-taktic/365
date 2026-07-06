@@ -3,16 +3,74 @@
 import React, { useState } from 'react';
 import { Search, User, Menu, Tv, Trophy, Flame, X, Play, Activity, ArrowUpRight } from 'lucide-react';
 
+// ==========================================
+// 1️⃣ داتا المنيو الجديد (الدوريات والفرق)
+// ==========================================
+interface League {
+  id: string;
+  name: string;
+  flag: string;
+  teams: string[];
+}
+
+const leaguesData: League[] = [
+  {
+    id: "laliga",
+    name: "LALIGA",
+    flag: "🇪🇸",
+    teams: ["REAL MADRID", "FC BARCELONA", "ATLÉTICO DE MADRID", "GIRONA FC", "ATHLETIC CLUB", "REAL SOCIEDAD"]
+  },
+  {
+    id: "botola",
+    name: "BOTOLA PRO",
+    flag: "🇲🇦",
+    teams: ["RAJA CA", "WYDAD AC", "AS FAR", "RS BERKANE", "IRT TANGER", "MAS FÈS"]
+  },
+  {
+    id: "premier-league",
+    name: "PREMIER LEAGUE",
+    flag: "🏴\u200d󠁧󠁢󠁥󠁮󠁧󠁿",
+    teams: ["MANCHESTER CITY", "LIVERPOOL FC", "ARSENAL FC", "MANCHESTER UNITED", "CHELSEA FC", "TOTTENHAM HOTSPUR"]
+  },
+  {
+    id: "serie-a",
+    name: "SERIE A",
+    flag: "🇮🇹",
+    teams: ["INTER MILAN", "AC MILAN", "JUVENTUS", "SSC NAPOLI", "AS ROMA", "ATALANTA"]
+  },
+  {
+    id: "bundesliga",
+    name: "BUNDESLIGA",
+    flag: "🇩🇪",
+    teams: ["BAYERN MUNICH", "BAYER LEVERKUSEN", "BORUSSIA DORTMUND", "RB LEIPZIG", "VFB STUTTGART"]
+  },
+  {
+    id: "ligue1",
+    name: "LIGUE 1",
+    flag: "🇫🇷",
+    teams: ["PARIS SAINT-GERMAIN", "OLYMPIQUE DE MARSEILLE", "AS MONACO", "LOSC LILLE", "OLYMPIQUE LYONNAIS"]
+  },
+  {
+    id: "worldcup",
+    name: "WORLD CUP 2026 🏆",
+    flag: "🌎",
+    teams: ["MAROC 🇲🇦", "FRANCE 🇫🇷", "ARGENTINE 🇦🇷", "BRÉSIL 🇧🇷", "ESPAGNE 🇪🇸", "ANGLETERRE 🏴\u200d󠁧󠁢󠁥󠁮󠁧󠁿"]
+  }
+];
+
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeArticle, setActiveArticle] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('live');
+  
+  // States الخاصة بالمنيو الجديد
+  const [activeLeague, setActiveLeague] = useState<League>(leaguesData[0]);
+  const [isEquipesOpen, setIsEquipesOpen] = useState(false);
 
   const backgroundImageStyle = {
     backgroundImage: `url('/studium.jpeg')`
   };
 
-  // المجموعات الجديدة لنتائج المباريات مع تحديد المتأهلين بنظام خروج المغلوب
   const liveTickerMatches = [
     { homeLogo: "https://flagcdn.com/w40/ca.png", teamH: "CAN", awayLogo: "https://flagcdn.com/w40/za.png", teamA: "RSA", score: "1 - 0", status: "FT", qualified: "كندا 🇨🇦" },
     { homeLogo: "https://flagcdn.com/w40/br.png", teamH: "BRA", awayLogo: "https://flagcdn.com/w40/jp.png", teamA: "JPN", score: "2 - 1", status: "FT", qualified: "البرازيل 🇧🇷" },
@@ -21,7 +79,7 @@ export default function Home() {
     { homeLogo: "https://flagcdn.com/w40/ci.png", teamH: "CIV", awayLogo: "https://flagcdn.com/w40/no.png", teamA: "NOR", score: "1 - 2", status: "FT", qualified: "النرويج 🇳🇴" },
     { homeLogo: "https://flagcdn.com/w40/fr.png", teamH: "FRA", awayLogo: "https://flagcdn.com/w40/se.png", teamA: "SWE", score: "3 - 0", status: "FT", qualified: "فرنسا 🇫🇷" },
     { homeLogo: "https://flagcdn.com/w40/mx.png", teamH: "MEX", awayLogo: "https://flagcdn.com/w40/ec.png", teamA: "ECU", score: "2 - 0", status: "FT", qualified: "المكسيك 🇲🇽" },
-    { homeLogo: "https://flagcdn.com/w40/gb-eng.png", teamH: "ENG", awayLogo: "https://flagcdn.com/w40/cd.png", teamA: "COD", score: "2 - 1", status: "FT", qualified: "إنجلترا 🏴󠁧󠁢󠁥󠁮󠁧󠁿" }
+    { homeLogo: "https://flagcdn.com/w40/gb-eng.png", teamH: "ENG", awayLogo: "https://flagcdn.com/w40/cd.png", teamA: "COD", score: "2 - 1", status: "FT", qualified: "إنجلترا 🏴\u200d󠁧󠁢󠁥󠁮󠁧󠁿" }
   ];
 
   const hostCountries = [
@@ -57,86 +115,16 @@ export default function Home() {
         "Morocco's pressure finally paid off in the 39th minute, when Hakimi finished a well-worked attacking move to level the score at 1-1."
       ]
     },
-    {
-      id: "scouting",
-      title: "Data Analytics: Predicting the Underdog Surprises of 2026",
-      tag: "Stats",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80",
-      time: "3h ago",
-      isCustom: false
-    },
-    {
-      id: "fitness",
-      title: "High-Intensity Transitions: The Physical Demands of Modern Football",
-      tag: "Fitness",
-      image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80",
-      time: "5h ago",
-      isCustom: false
-    },
-    {
-      id: "tactical-trends",
-      title: "The Death of the Classic No. 9? How False Profiles Dominate 2026",
-      tag: "Tactics",
-      image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=400&q=80",
-      time: "6h ago",
-      isCustom: false
-    },
-    {
-      id: "goalkeeper-role",
-      title: "Sweeper Keepers: Analyzing Progressive Passing from the Back",
-      tag: "Analysis",
-      image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=400&q=80",
-      time: "8h ago",
-      isCustom: false
-    },
-    {
-      id: "pressing-triggers",
-      title: "Mid-Block Pressing: Defensive Masterclasses in the Group Stage",
-      tag: "Defending",
-      image: "https://images.unsplash.com/photo-1431324155629-1a6edd1d1315?auto=format&fit=crop&w=400&q=80",
-      time: "12h ago",
-      isCustom: false
-    },
-    {
-      id: "youth-scout",
-      title: "Golden Generation: Top 5 Under-21 Talents Shifting the Tournament",
-      tag: "Scouting",
-      image: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=400&q=80",
-      time: "1d ago",
-      isCustom: false
-    },
-    {
-      id: "set-pieces",
-      title: "The Evolution of Set-Pieces: Unlocking Low Blocks in 2026",
-      tag: "Tactics",
-      image: "https://images.unsplash.com/photo-1504155611049-24a2e50f866b?auto=format&fit=crop&w=400&q=80",
-      time: "1d ago",
-      isCustom: false
-    },
-    {
-      id: "var-impact",
-      title: "Automated Offsides & VAR: How Referees Are Adapting on the Big Stage",
-      tag: "Technology",
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80",
-      time: "2d ago",
-      isCustom: false
-    },
-    {
-      id: "captain-influence",
-      title: "Leadership in High Pressure: Mentality Kings of the Group Stage",
-      tag: "Psychology",
-      image: "https://images.unsplash.com/photo-1516567174044-1dfc2787e42d?auto=format&fit=crop&w=400&q=80",
-      time: "2d ago",
-      isCustom: false
-    },
-    {
-      id: "stadium-tech",
-      title: "Climate-Controlled Pitches: Ensuring Peak Performance in Extreme Weather",
-      tag: "Infrastructure",
-      image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=400&q=80",
-      time: "3d ago",
-      isCustom: false
-    }
+    { id: "scouting", title: "Data Analytics: Predicting the Underdog Surprises of 2026", tag: "Stats", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80", time: "3h ago", isCustom: false },
+    { id: "fitness", title: "High-Intensity Transitions: The Physical Demands of Modern Football", tag: "Fitness", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=400&q=80", time: "5h ago", isCustom: false },
+    { id: "tactical-trends", title: "The Death of the Classic No. 9? How False Profiles Dominate 2026", tag: "Tactics", image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=400&q=80", time: "6h ago", isCustom: false },
+    { id: "goalkeeper-role", title: "Sweeper Keepers: Analyzing Progressive Passing from the Back", tag: "Analysis", image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=400&q=80", time: "8h ago", isCustom: false },
+    { id: "pressing-triggers", title: "Mid-Block Pressing: Defensive Masterclasses in the Group Stage", tag: "Defending", image: "https://images.unsplash.com/photo-1431324155629-1a6edd1d1315?auto=format&fit=crop&w=400&q=80", time: "12h ago", isCustom: false },
+    { id: "youth-scout", title: "Golden Generation: Top 5 Under-21 Talents Shifting the Tournament", tag: "Scouting", image: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=400&q=80", time: "1d ago", isCustom: false },
+    { id: "set-pieces", title: "The Evolution of Set-Pieces: Unlocking Low Blocks in 2026", tag: "Tactics", image: "https://images.unsplash.com/photo-1504155611049-24a2e50f866b?auto=format&fit=crop&w=400&q=80", time: "1d ago", isCustom: false },
+    { id: "var-impact", title: "Automated Offsides & VAR: How Referees Are Adapting on the Big Stage", tag: "Technology", image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80", time: "2d ago", isCustom: false },
+    { id: "captain-influence", title: "Leadership in High Pressure: Mentality Kings of the Group Stage", tag: "Psychology", image: "https://images.unsplash.com/photo-1516567174044-1dfc2787e42d?auto=format&fit=crop&w=400&q=80", time: "2d ago", isCustom: false },
+    { id: "stadium-tech", title: "Climate-Controlled Pitches: Ensuring Peak Performance in Extreme Weather", tag: "Infrastructure", image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=400&q=80", time: "3d ago", isCustom: false }
   ];
 
   const handleOpenArticle = (article: any) => {
@@ -182,7 +170,9 @@ export default function Home() {
           <Flame className="w-4 h-4 fill-black animate-bounce" /> Foot-Taktic • Exclusive Tactical Insights <Flame className="w-4 h-4 fill-black animate-bounce" />
         </div>
 
-        {/* NAVBAR */}
+        {/* ==========================================
+            2️⃣ NAVBAR والـ MEGA MENU الجديد مدموجين هنا
+            ========================================== */}
         <nav className="border-b border-zinc-800/60 bg-zinc-950/70 backdrop-blur-xl px-4 md:px-12 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
           <div className="flex items-center gap-8">
             <button className="text-zinc-400 hover:text-white p-2 hover:bg-zinc-900/80 rounded-xl">
@@ -195,9 +185,68 @@ export default function Home() {
             </div>
           </div>
 
+          {/* القائمة الرئيسية بالتعديل الجديد للـ Mega Menu */}
           <div className="hidden lg:flex items-center gap-8 text-xs font-black uppercase tracking-widest text-zinc-400">
             <a href="#" className="text-[#d4ff00] border-b-2 border-[#d4ff00] pb-1 tracking-widest">Home</a>
             <a href="#" className="hover:text-white transition-all">Matches</a>
+            
+            {/* زر ÉQUIPES مع ميزة الـ Hover الفتح التلقائي */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsEquipesOpen(true)}
+              onMouseLeave={() => setIsEquipesOpen(false)}
+            >
+              <button className={`font-black uppercase text-xs flex items-center gap-1 tracking-widest transition-colors ${isEquipesOpen ? 'text-[#d4ff00]' : 'hover:text-white'}`}>
+                <span>Équipes</span>
+                <span className="text-[9px]">{isEquipesOpen ? "▲" : "▼"}</span>
+              </button>
+
+              {/* الـ Mega Menu Dropdown */}
+              {isEquipesOpen && (
+                <div className="absolute left-0 mt-4 w-[550px] bg-[#121212] border border-zinc-800 rounded-2xl shadow-2xl flex z-50 overflow-hidden normal-case font-sans">
+                  
+                  {/* العمود الأول: الدوريات بتأثير الـ Hover لتبديل القائمة */}
+                  <div className="w-1/2 bg-[#18181B] p-2 border-r border-zinc-800">
+                    {leaguesData.map((league) => (
+                      <button
+                        key={league.id}
+                        onMouseEnter={() => setActiveLeague(league)}
+                        className={`w-full text-left px-4 py-3 rounded-xl flex items-center justify-between text-[11px] font-black uppercase tracking-wider transition-colors ${
+                          activeLeague.id === league.id
+                            ? "bg-black text-[#d4ff00]"
+                            : "text-zinc-400 hover:bg-zinc-800 hover:text-white"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm opacity-90">{league.flag}</span>
+                          <span>{league.name}</span>
+                        </div>
+                        {activeLeague.id === league.id && <span className="text-[10px]">▶</span>}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* العمود الثاني: عرض الفرق أو المنتخبات التابعة للدوري النشط */}
+                  <div className="w-1/2 bg-[#121212] p-4 flex flex-col gap-2">
+                    <div className="text-[9px] font-black text-zinc-500 uppercase tracking-widest mb-1 border-b border-zinc-800 pb-1.5 text-left">
+                      Top Clubs / Nations
+                    </div>
+                    {activeLeague.teams.map((team, index) => (
+                      <a
+                        key={index}
+                        href={`/teams/${team.toLowerCase().replace(/ /g, "-")}`}
+                        className="flex items-center gap-2 text-zinc-300 hover:text-[#d4ff00] text-[11px] font-bold uppercase tracking-wide py-2 px-2 rounded-xl hover:bg-zinc-900 transition-all group text-left"
+                      >
+                        <span className="inline-block w-1.5 h-1.5 border border-[#d4ff00] rounded-sm group-hover:bg-[#d4ff00] transition-colors"></span>
+                        <span>{team}</span>
+                      </a>
+                    ))}
+                  </div>
+
+                </div>
+              )}
+            </div>
+
             <a href="#" className="hover:text-white transition-all">Tactical Labs</a>
             <a href="#" className="hover:text-white transition-all">News</a>
           </div>
@@ -269,11 +318,10 @@ export default function Home() {
             ))}
           </div>
 
-          {/* MARQUEE TICKER WITH NEW RESULTS & ANIMATIONS */}
+          {/* MARQUEE TICKER */}
           <div className="w-full max-w-6xl px-4 mb-8 overflow-hidden relative">
             <div className="relative bg-zinc-950/70 backdrop-blur-md border border-zinc-900 rounded-2xl p-4 flex items-center overflow-hidden">
               <div className="animate-marquee-custom">
-                {/* Loop 1 */}
                 {liveTickerMatches.map((match, idx) => (
                   <div key={`set1-${idx}`} className="inline-flex flex-col gap-2 bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-3 min-w-[310px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
                     <div className="flex items-center justify-between w-full">
@@ -292,7 +340,6 @@ export default function Home() {
                         <img src={match.awayLogo} alt={match.teamA} className="w-5 h-5 object-contain rounded shadow-sm" />
                       </div>
                     </div>
-                    {/* Qualified Team Display & Extras */}
                     <div className="flex items-center justify-between border-t border-zinc-800/60 pt-1.5 text-[10px] dir-rtl text-right">
                       <span className="text-[#d4ff00] font-bold flex items-center gap-1">
                         <span className="animate-ping inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 ml-1"></span>
@@ -306,7 +353,6 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-                {/* Loop 2 (For smooth infinite scroll effect) */}
                 {liveTickerMatches.map((match, idx) => (
                   <div key={`set2-${idx}`} className="inline-flex flex-col gap-2 bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-3 min-w-[310px] justify-between group hover:border-[#d4ff00]/40 transition-colors">
                     <div className="flex items-center justify-between w-full">
