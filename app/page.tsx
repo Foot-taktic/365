@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Search, User, Trophy, Flame, Brain, Shield, Users, BarChart3, Menu, X,
-  ArrowUpRight, Mail, Globe, Calendar, Star, ChevronDown, Clock, BookOpen, Vote
+  ArrowUpRight, Mail, Globe, Calendar, Star, ChevronDown, Clock, BookOpen, Vote,
+  LayoutGrid, Tv, Radio, Newspaper
 } from 'lucide-react';
 
 interface League {
@@ -95,9 +96,8 @@ export default function Home() {
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
 
-  // Poll State (تسيير عملية التصويت لمباراة القمة مثلاً المغرب ضد فرنسا)
   const [hasVoted, setHasVoted] = useState(false);
-  const [votes, setVotes] = useState({ home: 642, away: 318 }); // داتا وهمية أولية للـ Votes
+  const [votes, setVotes] = useState({ home: 642, away: 318 }); 
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
 
   const totalVotes = votes.home + votes.away;
@@ -106,10 +106,7 @@ export default function Home() {
 
   const handleVote = (type: 'home' | 'away') => {
     if (hasVoted) return;
-    setVotes(prev => ({
-      ...prev,
-      [type]: prev[type] + 1
-    }));
+    setVotes(prev => ({ ...prev, [type]: prev[type] + 1 }));
     setSelectedTeam(type);
     setHasVoted(true);
   };
@@ -161,78 +158,139 @@ export default function Home() {
           <Flame className="w-4 h-4 fill-black" /> Foot-Taktic • World Cup Match Analytics & Results <Flame className="w-4 h-4 fill-black" />
         </div>
 
-        {/* NAVBAR */}
-        <nav ref={navRef} className="border-b border-zinc-800/60 bg-zinc-950/90 backdrop-blur-xl px-4 md:px-8 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
-          <div className="flex items-center gap-4">
+        {/* NAVBAR - beIN SPORTS Style */}
+        <nav ref={navRef} className="border-b border-zinc-800 bg-zinc-950 px-4 md:px-8 py-0 flex items-center justify-between sticky top-0 z-50 shadow-2xl">
+          <div className="flex items-center gap-6 h-16">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-zinc-400 hover:text-white transition-colors relative z-50"
+              className="lg:hidden p-2 text-zinc-400 hover:text-white transition-colors"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
 
-            <div className="text-xl md:text-2xl font-black tracking-tighter flex items-center gap-1 cursor-pointer">
+            <div className="text-xl md:text-2xl font-black tracking-tighter flex items-center gap-1 cursor-pointer h-full">
               <span className="text-white">FOOT</span> 
-              <span className="text-black bg-[#d4ff00] px-2.5 py-0.5 rounded-lg">TAKTIC</span>
+              <span className="text-black bg-[#d4ff00] px-2 py-0.5 rounded">TAKTIC</span>
             </div>
-          </div>
 
-          {/* DESKTOP LINKS */}
-          <div className="hidden lg:flex items-center gap-6 text-[11px] font-black uppercase tracking-widest text-zinc-400 relative">
-            <a href="#" className="text-[#d4ff00] border-b-2 border-[#d4ff00] pb-1 tracking-widest flex items-center gap-1.5">
-              <Flame className="w-3.5 h-3.5" /> Live Scores
-            </a>
-            
-            <a href="#" className="hover:text-white transition-colors flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5" /> Calendar
-            </a>
+            {/* DESKTOP LINKS - Mega Menu System */}
+            <div className="hidden lg:flex items-center gap-1 text-[11px] font-black uppercase tracking-wider text-zinc-300 h-full relative">
+              <a href="#" className="text-[#d4ff00] bg-zinc-900/50 px-4 h-full flex items-center gap-1.5 border-b-2 border-[#d4ff00]">
+                <Flame className="w-3.5 h-3.5" /> Live Scores
+              </a>
+              
+              {/* Leaguges / Équipes Dropdown (beIN Style Mega Menu) */}
+              <div className="h-full flex items-center">
+                <button 
+                  onClick={() => toggleDropdown('equipes')} 
+                  className={`px-4 h-full flex items-center gap-1.5 hover:bg-zinc-900 hover:text-white transition-colors ${openDropdown === 'equipes' ? 'bg-zinc-900 text-[#d4ff00]' : ''}`}
+                >
+                  <Trophy className="w-3.5 h-3.5" /> <span>Competitions</span> <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === 'equipes' ? 'rotate-180' : ''}`} />
+                </button>
 
-            <div className="relative">
-              <button onClick={() => toggleDropdown('equipes')} className={`font-black uppercase flex items-center gap-1.5 tracking-widest transition-colors ${openDropdown === 'equipes' ? 'text-[#d4ff00]' : 'hover:text-white'}`}>
-                <Trophy className="w-3.5 h-3.5" /> <span>Équipes</span> <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === 'equipes' ? 'rotate-180' : ''}`} />
-              </button>
-              {openDropdown === 'equipes' && (
-                <div className="absolute left-0 mt-4 w-[520px] bg-[#121212] border border-zinc-800 rounded-2xl shadow-2xl flex z-50 overflow-hidden normal-case font-sans">
-                  <div className="w-1/2 bg-[#18181B] p-2 border-r border-zinc-800">
-                    {leaguesData.map((league) => (
-                      <button key={league.id} onClick={() => setActiveLeague(league)} className={`w-full text-left px-4 py-2.5 rounded-xl flex items-center justify-between text-[11px] font-black uppercase tracking-wider transition-all ${activeLeague.id === league.id ? "bg-black text-[#d4ff00]" : "text-zinc-400 hover:bg-zinc-800 hover:text-white"}`}>
-                        <span className="flex items-center gap-2"><span>{league.flag}</span>{league.name}</span>
-                      </button>
-                    ))}
+                {openDropdown === 'equipes' && (
+                  <div className="absolute left-0 top-16 w-[85vw] max-w-5xl bg-zinc-950 border border-zinc-800 rounded-b-xl shadow-2xl flex z-50 overflow-hidden normal-case font-sans animate-in fade-in slide-in-from-top-2 duration-200">
+                    {/* Left Sidebar: League Tabs */}
+                    <div className="w-1/3 bg-zinc-900/60 p-3 border-r border-zinc-800 flex flex-col gap-1">
+                      <div className="text-[9px] font-black text-zinc-500 uppercase tracking-widest px-3 mb-2">Select League</div>
+                      {leaguesData.map((league) => (
+                        <button 
+                          key={league.id} 
+                          onMouseEnter={() => setActiveLeague(league)}
+                          onClick={() => setActiveLeague(league)} 
+                          className={`w-full text-left px-4 py-3 rounded-lg flex items-center justify-between text-[11px] font-black uppercase tracking-wider transition-all ${activeLeague.id === league.id ? "bg-[#d4ff00] text-black shadow-lg" : "text-zinc-300 hover:bg-zinc-800"}`}
+                        >
+                          <span className="flex items-center gap-2.5">
+                            <span className="text-sm">{league.flag}</span>
+                            {league.name}
+                          </span>
+                          <ArrowUpRight className="w-3 h-3 opacity-60" />
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Right Panel: Teams & Featured Options */}
+                    <div className="w-2/3 p-6 grid grid-cols-3 gap-6 bg-zinc-950">
+                      <div className="col-span-2">
+                        <div className="text-[10px] font-black text-[#d4ff00] uppercase tracking-widest mb-3 pb-1 border-b border-zinc-800 flex items-center gap-1.5">
+                          <LayoutGrid className="w-3.5 h-3.5" /> Active League Clubs
+                        </div>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+                          {activeLeague.teams.map((team, idx) => (
+                            <span key={idx} className="text-zinc-300 hover:text-[#d4ff00] text-xs font-bold uppercase cursor-pointer transition-colors flex items-center gap-2 group">
+                              <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 group-hover:bg-[#d4ff00]" />
+                              {team}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Quick Links Column */}
+                      <div className="border-l border-zinc-800 pl-6 flex flex-col gap-4">
+                        <div>
+                          <div className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-2">Coverage</div>
+                          <div className="flex flex-col gap-2">
+                            <a href="#" className="text-xs font-bold text-zinc-300 hover:text-white flex items-center gap-2"><Newspaper className="w-3.5 h-3.5 text-zinc-500" /> News Hub</a>
+                            <a href="#" className="text-xs font-bold text-zinc-300 hover:text-white flex items-center gap-2"><Tv className="w-3.5 h-3.5 text-zinc-500" /> Match Highlights</a>
+                          </div>
+                        </div>
+                        <div className="mt-auto bg-zinc-900 p-3 rounded-xl border border-zinc-800">
+                          <p className="text-[10px] font-black text-[#d4ff00] uppercase">Analysis Engine</p>
+                          <p className="text-[11px] text-zinc-400 mt-1 leading-normal">Deep stats dashboard active for this league.</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="w-1/2 p-4 flex flex-col gap-1.5 overflow-y-auto max-h-[320px]">
-                    <div className="text-[9px] font-black text-zinc-500 uppercase tracking-widest mb-1 border-b border-zinc-800 pb-1 text-left">Leagues Database</div>
-                    {activeLeague.teams.map((team, idx) => (
-                      <span key={idx} className="text-zinc-300 hover:text-[#d4ff00] text-[11px] font-bold uppercase py-0.5 text-left cursor-pointer transition-colors">• {team}</span>
-                    ))}
+                )}
+              </div>
+
+              {/* Tactical Labs Mega Menu */}
+              <div className="h-full flex items-center">
+                <button 
+                  onClick={() => toggleDropdown('tactical')} 
+                  className={`px-4 h-full flex items-center gap-1.5 hover:bg-zinc-900 hover:text-white transition-colors ${openDropdown === 'tactical' ? 'bg-zinc-900 text-[#d4ff00]' : ''}`}
+                >
+                  <Brain className="w-3.5 h-3.5" /> <span>Tactical Labs</span> <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === 'tactical' ? 'rotate-180' : ''}`} />
+                </button>
+
+                {openDropdown === 'tactical' && (
+                  <div className="absolute left-0 top-16 w-[600px] bg-zinc-950 border border-zinc-800 rounded-b-xl p-6 shadow-2xl z-50 grid grid-cols-2 gap-6 normal-case font-sans animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div>
+                      <div className="text-[10px] font-black text-zinc-500 uppercase tracking-widest border-b border-zinc-800 pb-1.5 mb-3 flex items-center gap-1.5">
+                        <BarChart3 className="w-3.5 h-3.5" /> Advanced Metrics
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <a href="#" className="flex items-center gap-3 text-zinc-300 hover:text-[#d4ff00] hover:bg-zinc-900 p-2 rounded-lg text-xs font-bold transition-all"><Brain className="w-4 h-4 text-emerald-400" /> Passing Networks</a>
+                        <a href="#" className="flex items-center gap-3 text-zinc-300 hover:text-[#d4ff00] hover:bg-zinc-900 p-2 rounded-lg text-xs font-bold transition-all"><Shield className="w-4 h-4 text-blue-400" /> Low Block Structures</a>
+                        <a href="#" className="flex items-center gap-3 text-zinc-300 hover:text-[#d4ff00] hover:bg-zinc-900 p-2 rounded-lg text-xs font-bold transition-all"><Users className="w-4 h-4 text-[#d4ff00]" /> Half-Space Overloads</a>
+                        <a href="#" className="flex items-center gap-3 text-zinc-300 hover:text-[#d4ff00] hover:bg-zinc-900 p-2 rounded-lg text-xs font-bold transition-all"><BarChart3 className="w-4 h-4 text-purple-400" /> Expected Goals (xG)</a>
+                      </div>
+                    </div>
+                    <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between">
+                      <div>
+                        <span className="bg-[#d4ff00]/10 text-[#d4ff00] text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded border border-[#d4ff00]/20">Pro Suite</span>
+                        <h4 className="text-white font-bold text-xs mt-2 uppercase">Match Intelligence Pro</h4>
+                        <p className="text-zinc-400 text-[11px] mt-1 leading-relaxed">Unlock access to real-time telemetry, advanced positioning charts, and manager breakdown algorithms.</p>
+                      </div>
+                      <button className="w-full mt-4 bg-zinc-800 text-white hover:bg-zinc-700 transition-colors py-2 text-[10px] font-black uppercase tracking-wider rounded-lg">Explore Labs</button>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
 
-            <div className="relative">
-              <button onClick={() => toggleDropdown('tactical')} className={`font-black uppercase flex items-center gap-1.5 tracking-widest transition-colors ${openDropdown === 'tactical' ? 'text-[#d4ff00]' : 'hover:text-white'}`}>
-                <Brain className="w-3.5 h-3.5" /> <span>Tactical Labs</span> <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === 'tactical' ? 'rotate-180' : ''}`} />
-              </button>
-              {openDropdown === 'tactical' && (
-                <div className="absolute left-0 mt-4 w-[320px] bg-[#121212] border border-zinc-800 rounded-2xl p-4 shadow-2xl z-50 flex flex-col gap-2.5 normal-case font-sans">
-                  <div className="text-[9px] font-black text-zinc-500 uppercase border-b border-zinc-800 pb-1 text-left">Advanced Frameworks</div>
-                  <a href="#" className="flex items-center gap-3 text-zinc-300 hover:text-[#d4ff00] text-xs font-bold py-1 text-left"><Brain className="w-4 h-4 text-emerald-400" /> Passing Networks</a>
-                  <a href="#" className="flex items-center gap-3 text-zinc-300 hover:text-[#d4ff00] text-xs font-bold py-1 text-left"><Shield className="w-4 h-4 text-blue-400" /> Low Block Structures</a>
-                  <a href="#" className="flex items-center gap-3 text-zinc-300 hover:text-[#d4ff00] text-xs font-bold py-1 text-left"><Users className="w-4 h-4 text-[#d4ff00]" /> Half-Space Overloads</a>
-                  <a href="#" className="flex items-center gap-3 text-zinc-300 hover:text-[#d4ff00] text-xs font-bold py-1 text-left"><BarChart3 className="w-4 h-4 text-purple-400" /> Expected Goals (xG)</a>
-                </div>
-              )}
-            </div>
+              <a href="#" className="px-4 h-full flex items-center gap-1.5 hover:bg-zinc-900 hover:text-white transition-colors">
+                <Calendar className="w-3.5 h-3.5" /> Calendar
+              </a>
 
-            <a href="#" className="hover:text-white transition-colors flex items-center gap-1.5">
-              <Star className="w-3.5 h-3.5" /> Favorites
-            </a>
+              <a href="#" className="px-4 h-full flex items-center gap-1.5 hover:bg-zinc-900 hover:text-white transition-colors">
+                <Star className="w-3.5 h-3.5" /> Favorites
+              </a>
+            </div>
           </div>
 
           <div className="flex items-center gap-2 md:gap-3 relative z-50">
             <button className="p-2 text-zinc-400 hover:text-white rounded-full transition-colors"><Search className="w-4.5 h-4.5" /></button>
-            <button className="p-2 text-zinc-400 hover:text-[#d4ff00] rounded-full border border-zinc-800/80 transition-colors"><User className="w-4.5 h-4.5" /></button>
+            <button className="p-2 text-zinc-400 hover:text-[#d4ff00] rounded-full border border-zinc-800 transition-colors"><User className="w-4.5 h-4.5" /></button>
           </div>
         </nav>
 
@@ -253,7 +311,7 @@ export default function Home() {
               {/* Dropdown 1 Mobile */}
               <div className="border-b border-zinc-900/60 py-3.5">
                 <button onClick={() => toggleMobileDropdown('equipes')} className="w-full flex items-center justify-between hover:text-white uppercase font-black tracking-wider">
-                  <span className="flex items-center gap-3"><Trophy className="w-5 h-5" /> Équipes</span>
+                  <span className="flex items-center gap-3"><Trophy className="w-5 h-5" /> Competitions</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileDropdown === 'equipes' ? 'rotate-180 text-[#d4ff00]' : ''}`} />
                 </button>
                 {mobileDropdown === 'equipes' && (
@@ -336,11 +394,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* NEW SECTION: MATCH PREDICTION POLL (تحت شريط النتائج مباشرة) */}
+        {/* MATCH PREDICTION POLL */}
         <section className="max-w-xl mx-auto px-4 relative z-10 mb-12">
           <div className="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 md:p-6 backdrop-blur-md shadow-2xl">
-            
-            {/* Header section */}
             <div className="flex items-center justify-between border-b border-zinc-900 pb-3 mb-5">
               <div className="flex items-center gap-2">
                 <Vote className="w-4 h-4 text-[#d4ff00]" />
@@ -355,85 +411,51 @@ export default function Home() {
               Who will win today's World Cup blockbuster?
             </p>
 
-            {/* Voting buttons / Progress display */}
             <div className="flex flex-col gap-3">
-              
-              {/* Home Team Option (Morocco) */}
               <button 
                 onClick={() => handleVote('home')}
                 disabled={hasVoted}
                 className={`relative w-full overflow-hidden rounded-xl border p-4 flex items-center justify-between transition-all duration-300 ${
-                  hasVoted 
-                    ? selectedTeam === 'home' 
-                      ? 'border-[#d4ff00] bg-[#d4ff00]/5' 
-                      : 'border-zinc-900 bg-zinc-900/20 cursor-default'
-                    : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-500'
+                  hasVoted ? selectedTeam === 'home' ? 'border-[#d4ff00] bg-[#d4ff00]/5' : 'border-zinc-900 bg-zinc-900/20 cursor-default' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-500'
                 }`}
               >
-                {/* Background progress indicator after voting */}
                 {hasVoted && (
-                  <div 
-                    className="absolute top-0 bottom-0 left-0 bg-[#d4ff00]/10 transition-all duration-1000 ease-out"
-                    style={{ width: `${homePercent}%` }}
-                  />
+                  <div className="absolute top-0 bottom-0 left-0 bg-[#d4ff00]/10 transition-all duration-1000 ease-out" style={{ width: `${homePercent}%` }} />
                 )}
-
                 <div className="flex items-center gap-3 relative z-10">
                   <img src="https://flagcdn.com/w80/ma.png" alt="Morocco" className="w-7 h-5 object-cover rounded shadow-sm" />
                   <span className="font-black text-xs uppercase tracking-wider text-zinc-200">Morocco</span>
                 </div>
-
                 <div className="font-mono text-xs font-black relative z-10">
-                  {hasVoted ? (
-                    <span className={selectedTeam === 'home' ? 'text-[#d4ff00]' : 'text-zinc-500'}>{homePercent}%</span>
-                  ) : (
-                    <span className="text-[10px] tracking-widest uppercase bg-zinc-800 px-2.5 py-1 rounded text-zinc-400 group-hover:text-white">Vote</span>
-                  )}
+                  {hasVoted ? <span className={selectedTeam === 'home' ? 'text-[#d4ff00]' : 'text-zinc-500'}>{homePercent}%</span> : <span className="text-[10px] tracking-widest uppercase bg-zinc-800 px-2.5 py-1 rounded text-zinc-400">Vote</span>}
                 </div>
               </button>
 
-              {/* Away Team Option (France) */}
               <button 
                 onClick={() => handleVote('away')}
                 disabled={hasVoted}
                 className={`relative w-full overflow-hidden rounded-xl border p-4 flex items-center justify-between transition-all duration-300 ${
-                  hasVoted 
-                    ? selectedTeam === 'away' 
-                      ? 'border-[#d4ff00] bg-[#d4ff00]/5' 
-                      : 'border-zinc-900 bg-zinc-900/20 cursor-default'
-                    : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-500'
+                  hasVoted ? selectedTeam === 'away' ? 'border-[#d4ff00] bg-[#d4ff00]/5' : 'border-zinc-900 bg-zinc-900/20 cursor-default' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-500'
                 }`}
               >
-                {/* Background progress indicator after voting */}
                 {hasVoted && (
-                  <div 
-                    className="absolute top-0 bottom-0 left-0 bg-[#d4ff00]/10 transition-all duration-1000 ease-out"
-                    style={{ width: `${awayPercent}%` }}
-                  />
+                  <div className="absolute top-0 bottom-0 left-0 bg-[#d4ff00]/10 transition-all duration-1000 ease-out" style={{ width: `${awayPercent}%` }} />
                 )}
-
                 <div className="flex items-center gap-3 relative z-10">
                   <img src="https://flagcdn.com/w80/fr.png" alt="France" className="w-7 h-5 object-cover rounded shadow-sm" />
                   <span className="font-black text-xs uppercase tracking-wider text-zinc-200">France</span>
                 </div>
-
                 <div className="font-mono text-xs font-black relative z-10">
-                  {hasVoted ? (
-                    <span className={selectedTeam === 'away' ? 'text-[#d4ff00]' : 'text-zinc-500'}>{awayPercent}%</span>
-                  ) : (
-                    <span className="text-[10px] tracking-widest uppercase bg-zinc-800 px-2.5 py-1 rounded text-zinc-400">Vote</span>
-                  )}
+                  {hasVoted ? <span className={selectedTeam === 'away' ? 'text-[#d4ff00]' : 'text-zinc-500'}>{awayPercent}%</span> : <span className="text-[10px] tracking-widest uppercase bg-zinc-800 px-2.5 py-1 rounded text-zinc-400">Vote</span>}
                 </div>
               </button>
-
             </div>
 
             {hasVoted && (
-              <p className="text-center text-[9px] font-bold uppercase tracking-widest text-zinc-500 mt-4 animate-fade-in">
+              <p className="text-center text-[9px] font-bold uppercase tracking-widest text-zinc-500 mt-4">
                 Thank you for voting! Predictions refresh before kick-off.
               </p>
             )}
-
           </div>
         </section>
 
@@ -483,25 +505,17 @@ export default function Home() {
                 key={article.id} 
                 className="bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl hover:border-[#d4ff00] transition-all duration-300 group cursor-pointer flex flex-col justify-between"
               >
-                {/* Article Image */}
                 <div className="relative h-44 overflow-hidden bg-zinc-900">
-                  <img 
-                    src={article.image} 
-                    alt={article.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <span className="absolute top-3 left-3 bg-[#d4ff00] text-black text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md shadow-md">
                     {article.category}
                   </span>
                 </div>
 
-                {/* Article Details */}
                 <div className="p-4 flex-grow flex flex-col justify-between gap-4">
                   <h3 className="font-bold text-sm text-zinc-100 leading-snug group-hover:text-[#d4ff00] transition-colors line-clamp-2">
                     {article.title}
                   </h3>
-                  
-                  {/* Timestamp & Read Time */}
                   <div className="flex items-center justify-between text-[10px] text-zinc-500 font-bold border-t border-zinc-900 pt-3">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3" /> {article.time}
