@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Search, User, Trophy, Flame, Brain, Shield, Users, BarChart3, Menu, X,
-  ArrowUpRight, Mail, Globe, Calendar, Star, ChevronDown, Clock, BookOpen, Vote,
-  LayoutGrid, Tv, Radio, Newspaper
+  ArrowUpRight, Calendar, Star, ChevronDown, Clock, BookOpen, Vote,
+  LayoutGrid, Tv, Newspaper, ArrowLeft
 } from 'lucide-react';
 
 interface League {
@@ -14,12 +14,32 @@ interface League {
   teams: string[];
 }
 
+interface Article {
+  id: string;
+  title: string;
+  tag: string;
+  heroImage: string;
+  date: string;
+  readTime: string;
+  stage: string;
+  teamH: string;
+  teamA: string;
+  flagH: string;
+  flagA: string;
+  scoreH: number;
+  scoreA: number;
+  summary: string;
+  sections: { title: string; text: string }[];
+  stats: { label: string; value: string }[];
+  goals: { player: string; minute: string }[];
+}
+
 const leaguesData: League[] = [
   {
     id: "worldcup",
     name: "WORLD CUP 2026 🏆",
     flag: "🌎",
-    teams: ["MAROC 🇲🇦", "FRANCE 🇫🇷", "ARGENTINE 🇦🇷", "BRÉSIL 🇧🇷", "ESPAGNE 🇪🇸", "ANGLETERRE 🏴󠁧󠁢󠁥󠁮󠁧󠁿", "ALLEMAGNE 🇩🇪", "ITALIE 🇮🇹"]
+    teams: ["MAROC 🇲🇦", "FRANCE 🇫🇷", "ARGENTINE 🇦🇷", "BRÉSIL 🇧🇷", "ESPAGNE 🇪🇸", "ANGLETERRE 🏴\u200D󠁧󠁢󠁥󠁮󠁧󠁿", "ALLEMAGNE 🇩🇪", "ITALIE 🇮🇹"]
   },
   {
     id: "botola",
@@ -36,16 +56,16 @@ const leaguesData: League[] = [
   {
     id: "premier-league",
     name: "PREMIER LEAGUE",
-    flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    flag: "🏴\u200D󠁧󠁢󠁥󠁮󠁧󠁿",
     teams: ["MANCHESTER CITY", "LIVERPOOL FC", "ARSENAL FC", "MANCHESTER UNITED", "CHELSEA FC", "TOTTENHAM HOTSPUR", "NEWCASTLE UNITED", "ASTON VILLA"]
   }
 ];
 
 const finishedMatches = [
-  { id: 1, teamH: "MAR", teamA: "ESP", logoH: "https://flagcdn.com/w80/ma.png", logoA: "https://flagcdn.com/w80/es.png", scoreH: 2, scoreA: 1, status: "FINISHED" },
-  { id: 2, teamH: "BRA", teamA: "FRA", logoH: "https://flagcdn.com/w80/br.png", logoA: "https://flagcdn.com/w80/fr.png", scoreH: 3, scoreA: 3, status: "LIVE 88'" },
-  { id: 3, teamH: "ARG", teamA: "GER", logoH: "https://flagcdn.com/w80/ar.png", logoA: "https://flagcdn.com/w80/de.png", scoreH: 0, scoreA: 2, status: "FINISHED" },
-  { id: 4, teamH: "ENG", teamA: "ITA", logoH: "https://flagcdn.com/w80/gb-eng.png", logoA: "https://flagcdn.com/w80/it.png", scoreH: 1, scoreA: 0, status: "FINISHED" }
+  { id: 1, teamH: "FRA", teamA: "MAR", logoH: "https://flagcdn.com/w80/fr.png", logoA: "https://flagcdn.com/w80/ma.png", scoreH: 2, scoreA: 0, status: "1/4 FINALS" },
+  { id: 2, teamH: "ESP", teamA: "BEL", logoH: "https://flagcdn.com/w80/es.png", logoA: "https://flagcdn.com/w80/be.png", scoreH: 2, scoreA: 1, status: "1/4 FINALS" },
+  { id: 3, teamH: "ARG", teamA: "EGY", logoH: "https://flagcdn.com/w80/ar.png", logoA: "https://flagcdn.com/w80/eg.png", scoreH: 3, scoreA: 2, status: "ROUND OF 16" },
+  { id: 4, teamH: "SUI", teamA: "COL", logoH: "https://flagcdn.com/w80/ch.png", logoA: "https://flagcdn.com/w80/co.png", scoreH: 0, scoreA: 0, status: "SUI (4-3 PEN)" }
 ];
 
 const tomorrowMatches = [
@@ -54,38 +74,72 @@ const tomorrowMatches = [
   { id: 3, teamH: "NED", teamA: "USA", logoH: "https://flagcdn.com/w80/nl.png", logoA: "https://flagcdn.com/w80/us.png", time: "21:45", status: "TOMORROW" }
 ];
 
-const articlesData = [
+const articlesData: Article[] = [
   {
-    id: 1,
-    title: "Tactical Analysis: How Morocco Dismantled the Spanish Low Block",
-    category: "Tactics",
-    time: "2 hours ago",
+    id: "france-morocco",
+    title: "France End Morocco's Historic World Cup Journey and Reach the Semi-finals",
+    tag: "FIFA WORLD CUP 2026",
+    heroImage: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?q=80&w=1600&auto=format&fit=crop",
+    date: "July 9, 2026",
+    readTime: "7 min read",
+    stage: "FIFA WORLD CUP 2026 • QUARTER-FINAL",
+    teamH: "France",
+    flagH: "https://flagcdn.com/w160/fr.png",
+    teamA: "Morocco",
+    flagA: "https://flagcdn.com/w160/ma.png",
+    scoreH: 2,
+    scoreA: 0,
+    summary: "France booked their place in the FIFA World Cup 2026 semi-finals after defeating Morocco 2-0 in a highly anticipated quarter-final clash. The Atlas Lions fought bravely throughout the contest but were unable to overcome the experience and clinical finishing of the reigning European giants.",
+    sections: [
+      { title: "A Balanced First Half", text: "Morocco entered the match with confidence following impressive victories over Canada and the Netherlands. Walid Regragui's side defended compactly and attempted to launch dangerous counter-attacks through the pace of their wide players. France, however, controlled possession and patiently searched for spaces between the Moroccan defensive lines." },
+      { title: "France Find the Breakthrough", text: "Early in the second half, France increased the tempo. Kylian Mbappé produced a moment of brilliance to break the deadlock before Ousmane Dembélé doubled the advantage only minutes later. Despite Morocco's determination and several attacking substitutions, France remained defensively solid until the final whistle." },
+      { title: "Tactical Analysis", text: "Didier Deschamps instructed his midfield to press aggressively while forcing Morocco to play long balls. The French full-backs constantly overlapped, stretching the Moroccan back line and creating numerical superiority on both wings. Morocco continued to defend with courage, but France's quality in transition ultimately proved decisive." },
+      { title: "What This Means", text: "France advance to the semi-finals where another huge challenge awaits. Morocco's tournament comes to an end, but their campaign will be remembered as another historic achievement for African football. Throughout the competition, the Atlas Lions displayed remarkable discipline, resilience and tactical intelligence, earning admiration from supporters around the world." }
+    ],
+    stats: [
+      { label: "Possession", value: "61% - 39%" },
+      { label: "Shots", value: "16 - 8" },
+      { label: "Shots on Target", value: "7 - 3" },
+      { label: "Pass Accuracy", value: "91% - 84%" },
+      { label: "Corners", value: "6 - 4" }
+    ],
+    goals: [
+      { player: "Kylian Mbappé", minute: "60'" },
+      { player: "Ousmane Dembélé", minute: "66'" }
+    ]
+  },
+  {
+    id: "spain-belgium",
+    title: "Spain 2-1 Belgium | World Cup 2026 Quarter-final Match Report",
+    tag: "FIFA WORLD CUP 2026",
+    heroImage: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1600&auto=format&fit=crop",
+    date: "July 12, 2026",
     readTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop&q=60"
-  },
-  {
-    id: 2,
-    title: "Manager Profile: Real Madrid's New Blueprint for Half-Space Overloads",
-    category: "Coaching",
-    time: "4 hours ago",
-    readTime: "4 min read",
-    image: "https://images.unsplash.com/photo-1518063319789-7217e6706b04?w=500&auto=format&fit=crop&q=60"
-  },
-  {
-    id: 3,
-    title: "Botola Pro Title Race: A Three-Way Battle Between Raja, Wydad, and AS FAR",
-    category: "Local League",
-    time: "1 day ago",
-    readTime: "3 min read",
-    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&auto=format&fit=crop&q=60"
-  },
-  {
-    id: 4,
-    title: "World Cup 2026 Hub: Stadium Readiness and Final Team Preparations",
-    category: "World Cup",
-    time: "2 days ago",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1431324155629-1a6dba1edf1a?w=500&auto=format&fit=crop&q=60"
+    stage: "FIFA WORLD CUP 2026 • QUARTER-FINAL",
+    teamH: "Spain",
+    flagH: "https://flagcdn.com/w160/es.png",
+    teamA: "Belgium",
+    flagA: "https://flagcdn.com/w160/be.png",
+    scoreH: 2,
+    scoreA: 1,
+    summary: "Spain secured a dramatic place in the FIFA World Cup 2026 semi-finals after defeating Belgium 2-1 in a thrilling quarter-final clash. Both teams entered the match full of confidence, but Spain's superior ball control and tactical discipline proved decisive in one of the tournament's most entertaining matches.",
+    sections: [
+      { title: "Dominating Midfield From The Start", text: "From the opening whistle, Spain controlled possession through quick passing combinations and intelligent movement in midfield. Belgium defended with discipline while looking to exploit spaces through fast counter-attacks. The first twenty minutes saw Spain dominate territory, forcing Belgium deep inside their own half." },
+      { title: "Ruiz Finds The Breakthrough", text: "Spain finally found the breakthrough midway through the first half. A flowing attacking move ended with Fabián Ruiz calmly finishing inside the penalty area, sending the Spanish supporters into celebration. Belgium attempted an immediate response but Spain maintained control until halftime." },
+      { title: "Belgian Pressure & The Equalizer", text: "The second half began with Belgium showing much more aggression. Their pressing became more intense and they were rewarded with a deserved equalizer after capitalizing on a defensive mistake. At 1-1, the momentum shifted and the match became increasingly open with chances appearing at both ends." },
+      { title: "Merino's Late Decisive Strike", text: "Spain remained patient despite Belgium's pressure. The decisive moment arrived in the closing stages when Mikel Merino finished another beautifully crafted Spanish move to restore the lead. Belgium pushed everyone forward during the final minutes, creating late pressure, but Spain defended brilliantly until the final whistle." }
+    ],
+    stats: [
+      { label: "Possession", value: "57% - 43%" },
+      { label: "Shots", value: "14 - 11" },
+      { label: "Shots on Target", value: "6 - 5" },
+      { label: "Pass Accuracy", value: "88% - 81%" },
+      { label: "Corners", value: "5 - 5" }
+    ],
+    goals: [
+      { player: "Fabián Ruiz", minute: "34'" },
+      { player: "Mikel Merino", minute: "82'" }
+    ]
   }
 ];
 
@@ -94,6 +148,8 @@ export default function Home() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+  const [currentView, setCurrentView] = useState<'home' | 'article'>('home'); 
+  const [selectedArticle, setSelectedArticle] = useState<Article>(articlesData[0]);
   const navRef = useRef<HTMLDivElement>(null);
 
   const [hasVoted, setHasVoted] = useState(false);
@@ -119,6 +175,15 @@ export default function Home() {
     setMobileDropdown(mobileDropdown === menuName ? null : menuName);
   };
 
+  const openArticle = (articleId: string) => {
+    const article = articlesData.find(a => a.id === articleId);
+    if (article) {
+      setSelectedArticle(article);
+      setCurrentView('article');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (navRef.current && !navRef.current.contains(event.target as Node)) {
@@ -142,7 +207,7 @@ export default function Home() {
         .animate-ticker-stream {
           display: flex;
           width: max-content;
-          animation: ticker 30s linear infinite;
+          animation: ticker 40s linear infinite;
         }
         .animate-ticker-stream:hover {
           animation-play-state: paused;
@@ -158,7 +223,7 @@ export default function Home() {
           <Flame className="w-4 h-4 fill-black" /> Foot-Taktic • World Cup Match Analytics & Results <Flame className="w-4 h-4 fill-black" />
         </div>
 
-        {/* NAVBAR - beIN SPORTS Style */}
+        {/* NAVBAR */}
         <nav ref={navRef} className="border-b border-zinc-800 bg-zinc-950 px-4 md:px-8 py-0 flex items-center justify-between sticky top-0 z-50 shadow-2xl">
           <div className="flex items-center gap-6 h-16">
             <button 
@@ -168,18 +233,18 @@ export default function Home() {
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
 
-            <div className="text-xl md:text-2xl font-black tracking-tighter flex items-center gap-1 cursor-pointer h-full">
+            <div onClick={() => setCurrentView('home')} className="text-xl md:text-2xl font-black tracking-tighter flex items-center gap-1 cursor-pointer h-full">
               <span className="text-white">FOOT</span> 
               <span className="text-black bg-[#d4ff00] px-2 py-0.5 rounded">TAKTIC</span>
             </div>
 
-            {/* DESKTOP LINKS - Mega Menu System */}
+            {/* DESKTOP LINKS */}
             <div className="hidden lg:flex items-center gap-1 text-[11px] font-black uppercase tracking-wider text-zinc-300 h-full relative">
-              <a href="#" className="text-[#d4ff00] bg-zinc-900/50 px-4 h-full flex items-center gap-1.5 border-b-2 border-[#d4ff00]">
+              <button onClick={() => setCurrentView('home')} className={`px-4 h-full flex items-center gap-1.5 transition-colors ${currentView === 'home' ? 'text-[#d4ff00] bg-zinc-900/50 border-b-2 border-[#d4ff00]' : 'hover:text-white'}`}>
                 <Flame className="w-3.5 h-3.5" /> Live Scores
-              </a>
+              </button>
               
-              {/* Leaguges / Équipes Dropdown (beIN Style Mega Menu) */}
+              {/* Competitions Dropdown */}
               <div className="h-full flex items-center">
                 <button 
                   onClick={() => toggleDropdown('equipes')} 
@@ -190,7 +255,6 @@ export default function Home() {
 
                 {openDropdown === 'equipes' && (
                   <div className="absolute left-0 top-16 w-[85vw] max-w-5xl bg-zinc-950 border border-zinc-800 rounded-b-xl shadow-2xl flex z-50 overflow-hidden normal-case font-sans animate-in fade-in slide-in-from-top-2 duration-200">
-                    {/* Left Sidebar: League Tabs */}
                     <div className="w-1/3 bg-zinc-900/60 p-3 border-r border-zinc-800 flex flex-col gap-1">
                       <div className="text-[9px] font-black text-zinc-500 uppercase tracking-widest px-3 mb-2">Select League</div>
                       {leaguesData.map((league) => (
@@ -209,7 +273,6 @@ export default function Home() {
                       ))}
                     </div>
 
-                    {/* Right Panel: Teams & Featured Options */}
                     <div className="w-2/3 p-6 grid grid-cols-3 gap-6 bg-zinc-950">
                       <div className="col-span-2">
                         <div className="text-[10px] font-black text-[#d4ff00] uppercase tracking-widest mb-3 pb-1 border-b border-zinc-800 flex items-center gap-1.5">
@@ -225,7 +288,6 @@ export default function Home() {
                         </div>
                       </div>
 
-                      {/* Quick Links Column */}
                       <div className="border-l border-zinc-800 pl-6 flex flex-col gap-4">
                         <div>
                           <div className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-2">Coverage</div>
@@ -244,7 +306,7 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Tactical Labs Mega Menu */}
+              {/* Tactical Labs */}
               <div className="h-full flex items-center">
                 <button 
                   onClick={() => toggleDropdown('tactical')} 
@@ -298,9 +360,9 @@ export default function Home() {
         {isMobileMenuOpen && (
           <div className="fixed inset-0 top-[110px] bg-zinc-950/98 backdrop-blur-2xl z-50 lg:hidden overflow-y-auto p-6 flex flex-col justify-between">
             <div className="flex flex-col gap-3 text-sm font-black uppercase tracking-wider text-zinc-400">
-              <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-[#d4ff00] py-3.5 border-b border-zinc-900/60 flex items-center gap-3">
+              <button onClick={() => { setCurrentView('home'); setIsMobileMenuOpen(false); }} className="text-[#d4ff00] py-3.5 border-b border-zinc-900/60 flex items-center gap-3 text-left">
                 <Flame className="w-5 h-5" /> Live Scores
-              </a>
+              </button>
               <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white py-3.5 border-b border-zinc-900/60 flex items-center gap-3">
                 <Calendar className="w-5 h-5" /> Match Calendar
               </a>
@@ -308,7 +370,6 @@ export default function Home() {
                 <Star className="w-5 h-5" /> Favorites
               </a>
 
-              {/* Dropdown 1 Mobile */}
               <div className="border-b border-zinc-900/60 py-3.5">
                 <button onClick={() => toggleMobileDropdown('equipes')} className="w-full flex items-center justify-between hover:text-white uppercase font-black tracking-wider">
                   <span className="flex items-center gap-3"><Trophy className="w-5 h-5" /> Competitions</span>
@@ -328,7 +389,6 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Dropdown 2 Mobile */}
               <div className="border-b border-zinc-900/60 py-3.5">
                 <button onClick={() => toggleMobileDropdown('tactical')} className="w-full flex items-center justify-between hover:text-white uppercase font-black tracking-wider">
                   <span className="flex items-center gap-3"><Brain className="w-5 h-5" /> Tactical Labs</span>
@@ -343,192 +403,317 @@ export default function Home() {
                 )}
               </div>
             </div>
-
-            <div className="p-4 bg-zinc-900/60 border border-zinc-800 rounded-2xl text-center mt-8">
-              <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mb-1">Foot-Taktic Premium</p>
-              <p className="text-[11px] text-zinc-400 font-medium">Instant access to professional AI analytics dashboards.</p>
-            </div>
           </div>
         )}
 
-        {/* HERO HEADER */}
-        <header className="relative min-h-[20vh] flex flex-col justify-center items-center text-center px-4 pt-10 z-10">
-          <div className="inline-flex items-center gap-2 bg-zinc-950/80 backdrop-blur-md px-4 py-2 rounded-full border border-zinc-800 text-[#d4ff00] text-xs font-black tracking-widest uppercase mb-4 shadow-xl">
-            <Trophy className="w-3.5 h-3.5" /> World Cup Analytics Platform
-          </div>
-          <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase mb-2 bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent">
-            FOOT-TAKTIC
-          </h1>
-        </header>
+        {/* CONDITION VIEW: HOME PAGE */}
+        {currentView === 'home' ? (
+          <>
+            {/* HERO HEADER */}
+            <header className="relative min-h-[20vh] flex flex-col justify-center items-center text-center px-4 pt-10 z-10">
+              <div className="inline-flex items-center gap-2 bg-zinc-950/80 backdrop-blur-md px-4 py-2 rounded-full border border-zinc-800 text-[#d4ff00] text-xs font-black tracking-widest uppercase mb-4 shadow-xl">
+                <Trophy className="w-3.5 h-3.5" /> World Cup Analytics Platform
+              </div>
+              <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase mb-2 bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent">
+                FOOT-TAKTIC
+              </h1>
+            </header>
 
-        {/* SHARIT LIVE TICKER */}
-        <div className="w-full bg-zinc-950/90 border-y border-zinc-800/80 backdrop-blur-md overflow-hidden py-3.5 mb-10 relative z-10 shadow-2xl">
-          <div className="animate-ticker-stream gap-16 items-center px-4">
-            {[...finishedMatches, ...finishedMatches, ...finishedMatches].map((match, index) => (
-              <div key={index} className="flex items-center gap-4 bg-zinc-900/40 px-5 py-1.5 rounded-full border border-zinc-800/60 shadow-md">
-                <div className="flex items-center gap-2">
-                  <img src={match.logoH} alt={match.teamH} className="w-6 h-4 object-cover rounded shadow-sm" />
-                  <span className="font-black text-xs tracking-wider text-zinc-300">{match.teamH}</span>
+            {/* SHARIT LIVE TICKER */}
+            <div className="w-full bg-zinc-950/90 border-y border-zinc-800/80 backdrop-blur-md overflow-hidden py-3.5 mb-10 relative z-10 shadow-2xl">
+              <div className="animate-ticker-stream gap-16 items-center px-4">
+                {[...finishedMatches, ...finishedMatches].map((match, index) => (
+                  <div key={index} className="flex items-center gap-4 bg-zinc-900/40 px-5 py-1.5 rounded-full border border-zinc-800/60 shadow-md">
+                    <div className="flex items-center gap-2">
+                      <img src={match.logoH} alt={match.teamH} className="w-6 h-4 object-cover rounded shadow-sm" />
+                      <span className="font-black text-xs tracking-wider text-zinc-300">{match.teamH}</span>
+                    </div>
+                    
+                    <div className="font-black text-xs text-white bg-black/80 px-3 py-0.5 rounded-lg border border-zinc-800 font-mono tracking-widest flex items-center gap-1.5">
+                      <span className={match.scoreH > match.scoreA ? "text-[#d4ff00]" : ""}>{match.scoreH}</span>
+                      <span className="text-zinc-600">-</span>
+                      <span className={match.scoreA > match.scoreH ? "text-[#d4ff00]" : ""}>{match.scoreA}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="font-black text-xs tracking-wider text-zinc-300">{match.teamA}</span>
+                      <img src={match.logoA} alt={match.teamA} className="w-6 h-4 object-cover rounded shadow-sm" />
+                    </div>
+
+                    <span className="text-[8px] font-black tracking-widest px-2 py-0.5 rounded-md uppercase border bg-zinc-800 text-zinc-400 border-zinc-700">
+                      {match.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* MATCH PREDICTION POLL */}
+            <section className="max-w-xl mx-auto px-4 relative z-10 mb-12">
+              <div className="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 md:p-6 backdrop-blur-md shadow-2xl">
+                <div className="flex items-center justify-between border-b border-zinc-900 pb-3 mb-5">
+                  <div className="flex items-center gap-2">
+                    <Vote className="w-4 h-4 text-[#d4ff00]" />
+                    <h3 className="text-[11px] font-black uppercase tracking-widest text-zinc-400">Match Prediction Poll</h3>
+                  </div>
+                  <span className="text-[9px] font-black bg-[#d4ff00]/10 text-[#d4ff00] border border-[#d4ff00]/20 px-2 py-0.5 rounded">
+                    {totalVotes} Votes
+                  </span>
                 </div>
+
+                <p className="text-center font-bold text-xs uppercase tracking-wide text-zinc-300 mb-4">
+                  Who will win today's World Cup blockbuster?
+                </p>
+
+                <div className="flex flex-col gap-3">
+                  <button 
+                    onClick={() => handleVote('home')}
+                    disabled={hasVoted}
+                    className={`relative w-full overflow-hidden rounded-xl border p-4 flex items-center justify-between transition-all duration-300 ${
+                      hasVoted ? selectedTeam === 'home' ? 'border-[#d4ff00] bg-[#d4ff00]/5' : 'border-zinc-900 bg-zinc-900/20 cursor-default' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-500'
+                    }`}
+                  >
+                    {hasVoted && (
+                      <div className="absolute top-0 bottom-0 left-0 bg-[#d4ff00]/10 transition-all duration-1000 ease-out" style={{ width: `${homePercent}%` }} />
+                    )}
+                    <div className="flex items-center gap-3 relative z-10">
+                      <img src="https://flagcdn.com/w80/ma.png" alt="Morocco" className="w-7 h-5 object-cover rounded shadow-sm" />
+                      <span className="font-black text-xs uppercase tracking-wider text-zinc-200">Morocco</span>
+                    </div>
+                    <div className="font-mono text-xs font-black relative z-10">
+                      {hasVoted ? <span className={selectedTeam === 'home' ? 'text-[#d4ff00]' : 'text-zinc-500'}>{homePercent}%</span> : <span className="text-[10px] tracking-widest uppercase bg-zinc-800 px-2.5 py-1 rounded text-zinc-400">Vote</span>}
+                    </div>
+                  </button>
+
+                  <button 
+                    onClick={() => handleVote('away')}
+                    disabled={hasVoted}
+                    className={`relative w-full overflow-hidden rounded-xl border p-4 flex items-center justify-between transition-all duration-300 ${
+                      hasVoted ? selectedTeam === 'away' ? 'border-[#d4ff00] bg-[#d4ff00]/5' : 'border-zinc-900 bg-zinc-900/20 cursor-default' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-500'
+                    }`}
+                  >
+                    {hasVoted && (
+                      <div className="absolute top-0 bottom-0 left-0 bg-[#d4ff00]/10 transition-all duration-1000 ease-out" style={{ width: `${awayPercent}%` }} />
+                    )}
+                    <div className="flex items-center gap-3 relative z-10">
+                      <img src="https://flagcdn.com/w80/fr.png" alt="France" className="w-7 h-5 object-cover rounded shadow-sm" />
+                      <span className="font-black text-xs uppercase tracking-wider text-zinc-200">France</span>
+                    </div>
+                    <div className="font-mono text-xs font-black relative z-10">
+                      {hasVoted ? <span className={selectedTeam === 'away' ? 'text-[#d4ff00]' : 'text-zinc-500'}>{awayPercent}%</span> : <span className="text-[10px] tracking-widest uppercase bg-zinc-800 px-2.5 py-1 rounded text-zinc-400">Vote</span>}
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {/* MATCHES GRID */}
+            <section className="max-w-5xl mx-auto py-6 px-4 relative z-10 mb-16">
+              <div className="flex items-center justify-center gap-2 mb-8">
+                <Trophy className="w-5 h-5 text-[#d4ff00]" />
+                <h2 className="text-sm font-black uppercase tracking-widest text-zinc-300">Tomorrow's Fixtures</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {tomorrowMatches.map((match) => (
+                  <div key={match.id} className="bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md p-6 rounded-2xl flex items-center justify-between hover:border-[#d4ff00] transition-all duration-300 shadow-xl group cursor-pointer">
+                    <div className="flex flex-col items-center gap-1 w-20">
+                      <img src={match.logoH} alt={match.teamH} className="w-14 h-10 object-cover rounded-lg shadow-md group-hover:scale-110 transition-transform duration-300" />
+                      <span className="font-black text-[11px] tracking-wide text-zinc-400 uppercase mt-2">{match.teamH}</span>
+                    </div>
+                    
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="font-black text-lg tracking-wider bg-zinc-900 px-4 py-1.5 rounded-xl border border-zinc-800 text-[#d4ff00] shadow-inner font-mono">
+                        {match.time}
+                      </div>
+                      <span className="text-[8px] font-black tracking-widest bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded mt-1 uppercase border border-amber-500/20">
+                        {match.status}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-1 w-20">
+                      <img src={match.logoA} alt={match.teamA} className="w-14 h-10 object-cover rounded-lg shadow-md group-hover:scale-110 transition-transform duration-300" />
+                      <span className="font-black text-[11px] tracking-wide text-zinc-400 uppercase mt-2">{match.teamA}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* ARTICLES SECTION */}
+            <section className="max-w-7xl mx-auto py-10 px-4 relative z-10 mb-16">
+              <div className="flex items-center gap-2 mb-8 border-b border-zinc-800 pb-4">
+                <BookOpen className="w-5 h-5 text-[#d4ff00]" />
+                <h2 className="text-xs font-black uppercase tracking-widest text-zinc-100">Latest Tactical Analysis & Insights</h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <div className="font-black text-xs text-white bg-black/80 px-3 py-0.5 rounded-lg border border-zinc-800 font-mono tracking-widest flex items-center gap-1.5">
-                  <span className={match.scoreH > match.scoreA ? "text-[#d4ff00]" : ""}>{match.scoreH}</span>
-                  <span className="text-zinc-600">-</span>
-                  <span className={match.scoreA > match.scoreH ? "text-[#d4ff00]" : ""}>{match.scoreA}</span>
+                {/* كارد مقال فرنسا والمغرب الديناميكي */}
+                <div 
+                  onClick={() => openArticle('france-morocco')}
+                  className="bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl hover:border-[#d4ff00] transition-all duration-300 group cursor-pointer flex flex-col justify-between"
+                >
+                  <div className="relative h-44 overflow-hidden bg-zinc-900">
+                    <img src="https://images.unsplash.com/photo-1547347298-4074fc3086f0?q=80&w=1600&auto=format&fit=crop" alt="France vs Morocco" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <span className="absolute top-3 left-3 bg-[#d4ff00] text-black text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md shadow-md">
+                      FIFA WORLD CUP 2026
+                    </span>
+                  </div>
+                  <div className="p-4 flex-grow flex flex-col justify-between gap-4">
+                    <h3 className="font-bold text-sm text-zinc-100 leading-snug group-hover:text-[#d4ff00] transition-colors line-clamp-2">
+                      France End Morocco's Historic World Cup Journey and Reach the Semi-finals
+                    </h3>
+                    <div className="flex items-center justify-between text-[10px] text-zinc-500 font-bold border-t border-zinc-900 pt-3">
+                      <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> July 9, 2026</span>
+                      <span className="text-zinc-400">7 min read</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="font-black text-xs tracking-wider text-zinc-300">{match.teamA}</span>
-                  <img src={match.logoA} alt={match.teamA} className="w-6 h-4 object-cover rounded shadow-sm" />
+                {/* كارد مقال إسبانيا وبلجيكا المدمج ديناميكياً */}
+                <div 
+                  onClick={() => openArticle('spain-belgium')}
+                  className="bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl hover:border-[#d4ff00] transition-all duration-300 group cursor-pointer flex flex-col justify-between"
+                >
+                  <div className="relative h-44 overflow-hidden bg-zinc-900">
+                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1600&auto=format&fit=crop" alt="Spain vs Belgium" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <span className="absolute top-3 left-3 bg-[#d4ff00] text-black text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md shadow-md">
+                      FIFA WORLD CUP 2026
+                    </span>
+                  </div>
+                  <div className="p-4 flex-grow flex flex-col justify-between gap-4">
+                    <h3 className="font-bold text-sm text-zinc-100 leading-snug group-hover:text-[#d4ff00] transition-colors line-clamp-2">
+                      Spain 2-1 Belgium | World Cup 2026 Quarter-final Match Report
+                    </h3>
+                    <div className="flex items-center justify-between text-[10px] text-zinc-500 font-bold border-t border-zinc-900 pt-3">
+                      <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> July 12, 2026</span>
+                      <span className="text-zinc-400">5 min read</span>
+                    </div>
+                  </div>
                 </div>
 
-                <span className={`text-[8px] font-black tracking-widest px-2 py-0.5 rounded-md uppercase border ${
-                  match.status.includes('LIVE') 
-                    ? 'bg-red-500/20 text-red-400 border-red-500/30 animate-pulse' 
-                    : 'bg-zinc-800 text-zinc-400 border-zinc-700'
-                }`}>
-                  {match.status}
+                {/* بقية المقالات الاستاتيكية */}
+                <div className="bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl hover:border-[#d4ff00] transition-all duration-300 group cursor-pointer flex flex-col justify-between">
+                  <div className="relative h-44 overflow-hidden bg-zinc-900">
+                    <img src="https://images.unsplash.com/photo-1518063319789-7217e6706b04?w=500&auto=format&fit=crop&q=60" alt="Manager Profile" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <span className="absolute top-3 left-3 bg-[#d4ff00] text-black text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md shadow-md">Coaching</span>
+                  </div>
+                  <div className="p-4 flex-grow flex flex-col justify-between gap-4">
+                    <h3 className="font-bold text-sm text-zinc-100 leading-snug group-hover:text-[#d4ff00] transition-colors line-clamp-2">Manager Profile: Real Madrid's New Blueprint for Half-Space Overloads</h3>
+                    <div className="flex items-center justify-between text-[10px] text-zinc-500 font-bold border-t border-zinc-900 pt-3"><span className="flex items-center gap-1"><Clock className="w-3 h-3" /> 4 hours ago</span><span className="text-zinc-400">4 min read</span></div>
+                  </div>
+                </div>
+
+                <div className="bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl hover:border-[#d4ff00] transition-all duration-300 group cursor-pointer flex flex-col justify-between">
+                  <div className="relative h-44 overflow-hidden bg-zinc-900">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&auto=format&fit=crop&q=60" alt="Botola Pro" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <span className="absolute top-3 left-3 bg-[#d4ff00] text-black text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md shadow-md">Local League</span>
+                  </div>
+                  <div className="p-4 flex-grow flex flex-col justify-between gap-4">
+                    <h3 className="font-bold text-sm text-zinc-100 leading-snug group-hover:text-[#d4ff00] transition-colors line-clamp-2">Botola Pro Title Race: A Three-Way Battle Between Raja, Wydad, and AS FAR</h3>
+                    <div className="flex items-center justify-between text-[10px] text-zinc-500 font-bold border-t border-zinc-900 pt-3"><span className="flex items-center gap-1"><Clock className="w-3 h-3" /> 1 day ago</span><span className="text-zinc-400">3 min read</span></div>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          </>
+        ) : (
+          /* واجهة عرض المقالات التفاعلية الموحدة */
+          <main className="min-h-screen bg-[#0b0b0b]/90 text-white relative z-10 animate-in fade-in duration-300">
+            {/* Hero */}
+            <section className="relative h-[450px] bg-cover bg-center" style={{ backgroundImage: `url('${selectedArticle.heroImage}')` }}>
+              <div className="absolute inset-0 bg-black/75" />
+              <div className="relative z-10 max-w-5xl mx-auto px-6 h-full flex flex-col justify-center">
+                <span className="bg-[#d4ff00] text-black font-black uppercase tracking-widest text-[10px] px-4 py-1.5 rounded-full w-fit mb-4">
+                  {selectedArticle.stage}
                 </span>
+                <h1 className="text-3xl md:text-5xl font-black leading-tight max-w-4xl uppercase tracking-tight">
+                  {selectedArticle.title}
+                </h1>
+                <div className="flex gap-6 mt-6 text-zinc-400 text-xs flex-wrap font-bold">
+                  <div className="flex items-center gap-2"><Calendar size={14} /> {selectedArticle.date}</div>
+                  <div className="flex items-center gap-2"><Clock size={14} /> {selectedArticle.readTime}</div>
+                  <div className="flex items-center gap-2"><Trophy size={14} /> World Cup 2026</div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </section>
 
-        {/* MATCH PREDICTION POLL */}
-        <section className="max-w-xl mx-auto px-4 relative z-10 mb-12">
-          <div className="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 md:p-6 backdrop-blur-md shadow-2xl">
-            <div className="flex items-center justify-between border-b border-zinc-900 pb-3 mb-5">
-              <div className="flex items-center gap-2">
-                <Vote className="w-4 h-4 text-[#d4ff00]" />
-                <h3 className="text-[11px] font-black uppercase tracking-widest text-zinc-400">Match Prediction Poll</h3>
+            {/* Scoreboard */}
+            <section className="max-w-5xl mx-auto px-4 py-8">
+              <div className="bg-zinc-950/80 rounded-2xl border border-zinc-800 p-6 backdrop-blur-md">
+                <div className="grid grid-cols-3 items-center">
+                  <div className="text-center">
+                    <img src={selectedArticle.flagH} className="w-16 md:w-20 mx-auto mb-2 rounded shadow-md object-contain" alt={selectedArticle.teamH} />
+                    <h2 className="text-sm md:text-lg font-black uppercase tracking-wider">{selectedArticle.teamH}</h2>
+                  </div>
+                  <div className="text-center">
+                    <h1 className="text-4xl md:text-6xl font-mono font-black text-[#d4ff00]">{selectedArticle.scoreH} - {selectedArticle.scoreA}</h1>
+                    <p className="uppercase text-[9px] text-zinc-500 tracking-widest mt-2 font-black">Full Time</p>
+                  </div>
+                  <div className="text-center">
+                    <img src={selectedArticle.flagA} className="w-16 md:w-20 mx-auto mb-2 rounded shadow-md object-contain" alt={selectedArticle.teamA} />
+                    <h2 className="text-sm md:text-lg font-black uppercase tracking-wider">{selectedArticle.teamA}</h2>
+                  </div>
+                </div>
               </div>
-              <span className="text-[9px] font-black bg-[#d4ff00]/10 text-[#d4ff00] border border-[#d4ff00]/20 px-2 py-0.5 rounded">
-                {totalVotes} Votes
-              </span>
-            </div>
+            </section>
 
-            <p className="text-center font-bold text-xs uppercase tracking-wide text-zinc-300 mb-4">
-              Who will win today's World Cup blockbuster?
-            </p>
-
-            <div className="flex flex-col gap-3">
-              <button 
-                onClick={() => handleVote('home')}
-                disabled={hasVoted}
-                className={`relative w-full overflow-hidden rounded-xl border p-4 flex items-center justify-between transition-all duration-300 ${
-                  hasVoted ? selectedTeam === 'home' ? 'border-[#d4ff00] bg-[#d4ff00]/5' : 'border-zinc-900 bg-zinc-900/20 cursor-default' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-500'
-                }`}
-              >
-                {hasVoted && (
-                  <div className="absolute top-0 bottom-0 left-0 bg-[#d4ff00]/10 transition-all duration-1000 ease-out" style={{ width: `${homePercent}%` }} />
-                )}
-                <div className="flex items-center gap-3 relative z-10">
-                  <img src="https://flagcdn.com/w80/ma.png" alt="Morocco" className="w-7 h-5 object-cover rounded shadow-sm" />
-                  <span className="font-black text-xs uppercase tracking-wider text-zinc-200">Morocco</span>
-                </div>
-                <div className="font-mono text-xs font-black relative z-10">
-                  {hasVoted ? <span className={selectedTeam === 'home' ? 'text-[#d4ff00]' : 'text-zinc-500'}>{homePercent}%</span> : <span className="text-[10px] tracking-widest uppercase bg-zinc-800 px-2.5 py-1 rounded text-zinc-400">Vote</span>}
-                </div>
-              </button>
-
-              <button 
-                onClick={() => handleVote('away')}
-                disabled={hasVoted}
-                className={`relative w-full overflow-hidden rounded-xl border p-4 flex items-center justify-between transition-all duration-300 ${
-                  hasVoted ? selectedTeam === 'away' ? 'border-[#d4ff00] bg-[#d4ff00]/5' : 'border-zinc-900 bg-zinc-900/20 cursor-default' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-500'
-                }`}
-              >
-                {hasVoted && (
-                  <div className="absolute top-0 bottom-0 left-0 bg-[#d4ff00]/10 transition-all duration-1000 ease-out" style={{ width: `${awayPercent}%` }} />
-                )}
-                <div className="flex items-center gap-3 relative z-10">
-                  <img src="https://flagcdn.com/w80/fr.png" alt="France" className="w-7 h-5 object-cover rounded shadow-sm" />
-                  <span className="font-black text-xs uppercase tracking-wider text-zinc-200">France</span>
-                </div>
-                <div className="font-mono text-xs font-black relative z-10">
-                  {hasVoted ? <span className={selectedTeam === 'away' ? 'text-[#d4ff00]' : 'text-zinc-500'}>{awayPercent}%</span> : <span className="text-[10px] tracking-widest uppercase bg-zinc-800 px-2.5 py-1 rounded text-zinc-400">Vote</span>}
-                </div>
-              </button>
-            </div>
-
-            {hasVoted && (
-              <p className="text-center text-[9px] font-bold uppercase tracking-widest text-zinc-500 mt-4">
-                Thank you for voting! Predictions refresh before kick-off.
-              </p>
-            )}
-          </div>
-        </section>
-
-        {/* MATCHES GRID */}
-        <section className="max-w-5xl mx-auto py-6 px-4 relative z-10 mb-16">
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <Trophy className="w-5 h-5 text-[#d4ff00]" />
-            <h2 className="text-sm font-black uppercase tracking-widest text-zinc-300">Tomorrow's Fixtures</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {tomorrowMatches.map((match) => (
-              <div key={match.id} className="bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md p-6 rounded-2xl flex items-center justify-between hover:border-[#d4ff00] transition-all duration-300 shadow-xl group cursor-pointer">
-                <div className="flex flex-col items-center gap-1 w-20">
-                  <img src={match.logoH} alt={match.teamH} className="w-14 h-10 object-cover rounded-lg shadow-md group-hover:scale-110 transition-transform duration-300" />
-                  <span className="font-black text-[11px] tracking-wide text-zinc-400 uppercase mt-2">{match.teamH}</span>
-                </div>
+            {/* Article Content */}
+            <section className="max-w-4xl mx-auto px-4 pb-20">
+              <div className="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-6 md:p-10 leading-relaxed text-zinc-300 text-xs md:text-sm font-medium space-y-6">
                 
-                <div className="flex flex-col items-center gap-1">
-                  <div className="font-black text-lg tracking-wider bg-zinc-900 px-4 py-1.5 rounded-xl border border-zinc-800 text-[#d4ff00] shadow-inner font-mono">
-                    {match.time}
+                <p className="text-sm md:text-base text-zinc-200 font-semibold border-l-2 border-[#d4ff00] pl-4">
+                  {selectedArticle.summary}
+                </p>
+
+                {selectedArticle.sections.map((section, idx) => (
+                  <div key={idx}>
+                    <h2 className="text-base md:text-xl font-black text-[#d4ff00] mb-2 uppercase tracking-wide">{section.title}</h2>
+                    <p>{section.text}</p>
                   </div>
-                  <span className="text-[8px] font-black tracking-widest bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded mt-1 uppercase border border-amber-500/20">
-                    {match.status}
-                  </span>
-                </div>
+                ))}
 
-                <div className="flex flex-col items-center gap-1 w-20">
-                  <img src={match.logoA} alt={match.teamA} className="w-14 h-10 object-cover rounded-lg shadow-md group-hover:scale-110 transition-transform duration-300" />
-                  <span className="font-black text-[11px] tracking-wide text-zinc-400 uppercase mt-2">{match.teamA}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ARTICLES GRID SECTION */}
-        <section className="max-w-7xl mx-auto py-10 px-4 relative z-10 mb-16">
-          <div className="flex items-center gap-2 mb-8 border-b border-zinc-800 pb-4">
-            <BookOpen className="w-5 h-5 text-[#d4ff00]" />
-            <h2 className="text-xs font-black uppercase tracking-widest text-zinc-100">Latest Tactical Analysis & Insights</h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {articlesData.map((article) => (
-              <div 
-                key={article.id} 
-                className="bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl hover:border-[#d4ff00] transition-all duration-300 group cursor-pointer flex flex-col justify-between"
-              >
-                <div className="relative h-44 overflow-hidden bg-zinc-900">
-                  <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <span className="absolute top-3 left-3 bg-[#d4ff00] text-black text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md shadow-md">
-                    {article.category}
-                  </span>
-                </div>
-
-                <div className="p-4 flex-grow flex flex-col justify-between gap-4">
-                  <h3 className="font-bold text-sm text-zinc-100 leading-snug group-hover:text-[#d4ff00] transition-colors line-clamp-2">
-                    {article.title}
+                {/* Dynamic Match Statistics */}
+                <div className="bg-[#d4ff00]/5 border border-[#d4ff00]/20 rounded-xl p-5 md:p-6 my-6">
+                  <h3 className="text-[#d4ff00] font-black text-xs md:text-sm uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <BarChart3 className="w-4 h-4" /> Match Statistics
                   </h3>
-                  <div className="flex items-center justify-between text-[10px] text-zinc-500 font-bold border-t border-zinc-900 pt-3">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {article.time}
-                    </span>
-                    <span className="text-zinc-400">
-                      {article.readTime}
-                    </span>
+                  <div className="space-y-3 text-[11px] md:text-xs font-mono">
+                    {selectedArticle.stats.map((stat, idx) => (
+                      <div key={idx} className="flex justify-between border-b border-zinc-900 pb-2 last:border-none">
+                        <span>{stat.label}</span>
+                        <strong className="text-zinc-100">{stat.value}</strong>
+                      </div>
+                    ))}
                   </div>
                 </div>
+
+                {/* Dynamic Goals */}
+                <div className="bg-zinc-900/60 rounded-xl p-5 border border-zinc-800">
+                  <h3 className="text-xs md:text-sm font-black text-[#d4ff00] uppercase tracking-widest mb-3">Goals</h3>
+                  <div className="space-y-2 text-[11px] font-mono">
+                    {selectedArticle.goals.map((goal, idx) => (
+                      <div key={idx} className="flex justify-between border-b border-zinc-900 pb-2 last:border-none">
+                        <span>{goal.player}</span>
+                        <strong>{goal.minute}</strong>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => setCurrentView('home')}
+                  className="mt-6 flex items-center gap-2 bg-[#d4ff00] text-black px-5 py-3 rounded-xl text-xs font-black uppercase tracking-wider hover:scale-105 transition duration-300"
+                >
+                  <ArrowLeft size={14} /> Back to Homepage
+                </button>
+
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
+          </main>
+        )}
 
       </div>
 
@@ -544,41 +729,11 @@ export default function Home() {
               The premier professional platform for match intelligence, World Cup tracking, and advanced tactical analytics dashboards.
             </p>
           </div>
-
-          <div className="flex flex-col gap-3">
-            <h3 className="text-zinc-300 text-xs font-black uppercase tracking-wider">Navigation</h3>
-            <div className="flex flex-col gap-2 text-[11px] font-bold text-zinc-500 uppercase tracking-wide">
-              <a href="#" className="hover:text-[#d4ff00] transition-colors flex items-center gap-1">Live Scores <ArrowUpRight className="w-3 h-3" /></a>
-              <a href="#" className="hover:text-[#d4ff00] transition-colors flex items-center gap-1">Calendar <ArrowUpRight className="w-3 h-3" /></a>
-              <a href="#" className="hover:text-[#d4ff00] transition-colors flex items-center gap-1">Tactical Labs <ArrowUpRight className="w-3 h-3" /></a>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <h3 className="text-zinc-300 text-xs font-black uppercase tracking-wider">Leagues covered</h3>
-            <div className="flex flex-col gap-1.5 text-[11px] font-semibold text-zinc-500 uppercase">
-              <span>• World Cup 2026</span>
-              <span>• Botola Pro Inwi</span>
-              <span>• LaLiga EA Sports</span>
-              <span>• Premier League</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <h3 className="text-zinc-300 text-xs font-black uppercase tracking-wider">Stay Connected</h3>
-            <div className="flex items-center gap-3 text-zinc-400">
-              <a href="#" className="hover:text-[#d4ff00] p-2 bg-zinc-900 rounded-lg border border-zinc-800 transition-colors"><Globe className="w-4 h-4" /></a>
-              <a href="#" className="hover:text-[#d4ff00] p-2 bg-zinc-900 rounded-lg border border-zinc-800 transition-colors"><Mail className="w-4 h-4" /></a>
-            </div>
-          </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 border-t border-zinc-900/60 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <span className="text-zinc-600 text-[10px] font-bold tracking-wider uppercase">
             © {new Date().getFullYear()} FOOT-TAKTIC. All rights reserved.
-          </span>
-          <span className="text-zinc-600 text-[10px] font-bold tracking-wider uppercase flex items-center gap-1.5">
-            Designed for <span className="text-[#d4ff00]">Pro Competitions</span>
           </span>
         </div>
       </footer>
